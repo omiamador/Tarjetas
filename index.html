@@ -15,9 +15,16 @@
         .modal-content { width: 95%; max-width: 800px; max-height: 90vh; overflow-y: auto; }
         .btn-action { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn-action:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .bg-banamex { background: linear-gradient(135deg, #004691 0%, #002a57 100%); }
-        .bg-santander { background: linear-gradient(135deg, #ec0000 0%, #a30000 100%); }
-        .bg-bancomer { background: linear-gradient(135deg, #004481 0%, #00264d 100%); }
+        
+        /* Colores dinámicos para bancos */
+        .bg-bank-default { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .bg-BANAMEX { background: linear-gradient(135deg, #004691 0%, #002a57 100%); }
+        .bg-SANTANDER { background: linear-gradient(135deg, #ec0000 0%, #a30000 100%); }
+        .bg-BANCOMER { background: linear-gradient(135deg, #004481 0%, #00264d 100%); }
+        .bg-BBVA { background: linear-gradient(135deg, #004481 0%, #00264d 100%); }
+        .bg-AMEX { background: linear-gradient(135deg, #0070d5 0%, #003b71 100%); }
+        .bg-NU { background: linear-gradient(135deg, #820ad1 0%, #4b067a 100%); }
+
         input, select, textarea { border: 1.5px solid #e2e8f0; padding: 12px; border-radius: 12px; outline: none; width: 100%; font-size: 14px; background: white; }
         .collapsible-content { transition: max-height 0.3s ease-out; overflow: hidden; max-height: 2000px; }
         .collapsed { max-height: 0 !important; }
@@ -46,8 +53,8 @@
 
         <div class="flex flex-wrap gap-4 mb-10">
             <button onclick="openModal('modalConfig')" class="btn-action flex-1 min-w-[140px] bg-white border border-slate-200 p-4 rounded-[22px] flex items-center gap-3 shadow-sm">
-                <span class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl">⚙️</span>
-                <div class="text-left"><p class="text-[9px] font-800 text-slate-400 uppercase">Fechas</p><p class="text-xs font-800 text-slate-700">Corte</p></div>
+                <span class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl">💳</span>
+                <div class="text-left"><p class="text-[9px] font-800 text-slate-400 uppercase">Gestionar</p><p class="text-xs font-800 text-slate-700">Tarjetas</p></div>
             </button>
             <button onclick="openModal('modalImport')" class="btn-action flex-1 min-w-[140px] bg-white border border-slate-200 p-4 rounded-[22px] flex items-center gap-3 shadow-sm">
                 <span class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl">🚀</span>
@@ -82,6 +89,29 @@
         <div id="tablesContainer" class="space-y-12"></div>
     </div>
 
+    <div id="modalConfig" class="modal-bg">
+        <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white max-w-lg">
+            <button onclick="closeModal('modalConfig')" class="absolute top-6 right-6 text-slate-400">✕</button>
+            <h3 class="text-xl font-800 mb-6 flex items-center gap-2">💳 Mis Tarjetas</h3>
+            
+            <div id="bankConfigRows" class="space-y-3 mb-8 max-h-60 overflow-y-auto pr-2"></div>
+
+            <div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100">
+                <p class="text-[10px] font-800 text-blue-600 uppercase mb-4 tracking-widest">Agregar Nueva Tarjeta</p>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <input type="text" id="newBankName" placeholder="Nombre (ej. BBVA)" class="col-span-2 uppercase font-bold">
+                    <input type="number" id="newBankCut" placeholder="Día Corte" class="text-xs">
+                    <input type="number" id="newBankLimit" placeholder="Día Límite" class="text-xs">
+                </div>
+                <button onclick="addNewBank()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-800 text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all">
+                    + Añadir Tarjeta
+                </button>
+            </div>
+
+            <button onclick="saveBankConfig()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-800 text-xs uppercase tracking-widest mt-6">Guardar Cambios y Fechas</button>
+        </div>
+    </div>
+
     <div id="modalCharts" class="modal-bg">
         <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white">
             <button onclick="closeModal('modalCharts')" class="absolute top-6 right-6 text-slate-400">✕</button>
@@ -92,15 +122,6 @@
         </div>
     </div>
 
-    <div id="modalConfig" class="modal-bg">
-        <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white max-w-md">
-            <button onclick="closeModal('modalConfig')" class="absolute top-6 right-6 text-slate-400">✕</button>
-            <h3 class="text-xl font-800 mb-6 flex items-center gap-2">⚙️ Fechas de Corte</h3>
-            <div id="bankConfigRows" class="space-y-4"></div>
-            <button onclick="saveBankConfig()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-800 text-xs uppercase tracking-widest mt-6">Guardar Configuración</button>
-        </div>
-    </div>
-
     <div id="modalImport" class="modal-bg">
         <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white max-w-4xl">
             <button onclick="closeModal('modalImport')" class="absolute top-6 right-6 text-slate-400">✕</button>
@@ -108,7 +129,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-4">
                     <textarea id="rawText" rows="8" class="font-mono text-xs" placeholder='Pega el JSON aquí...'></textarea>
-                    <select id="importCard" class="font-bold"><option>BANAMEX</option><option>SANTANDER</option><option>BANCOMER</option></select>
+                    <select id="importCard" class="font-bold dynamic-bank-select"></select>
                     <button onclick="processText()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-800 text-xs uppercase tracking-widest">Pre-visualizar</button>
                 </div>
                 <div id="importPreview" class="bg-slate-50 p-6 rounded-xl border border-slate-200 overflow-y-auto max-h-[400px]"></div>
@@ -146,13 +167,9 @@
                     </div>
                     <div>
                         <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Plan MSI</label>
-                        <select id="manualMonths" class="bg-white/50 border-slate-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-all font-bold text-slate-700 rounded-2xl cursor-pointer">
-                            <option value="1">💳 Único</option>
-                            <option value="3">🗓️ 3 MSI</option>
-                            <option value="6">🗓️ 6 MSI</option>
-                            <option value="12">🗓️ 12 MSI</option>
-                            <option value="18">🗓️ 18 MSI</option>
-                            <option value="24">🗓️ 24 MSI</option>
+                        <select id="manualMonths" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl">
+                            <option value="1">💳 Único</option><option value="3">🗓️ 3 MSI</option><option value="6">🗓️ 6 MSI</option>
+                            <option value="12">🗓️ 12 MSI</option><option value="18">🗓️ 18 MSI</option><option value="24">🗓️ 24 MSI</option>
                         </select>
                     </div>
                 </div>
@@ -160,27 +177,19 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Banco</label>
-                        <select id="cardType" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl cursor-pointer">
-                            <option>BANAMEX</option>
-                            <option>SANTANDER</option>
-                            <option>BANCOMER</option>
-                        </select>
+                        <select id="cardType" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl dynamic-bank-select"></select>
                     </div>
                     <div>
                         <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Responsable</label>
-                        <select id="owner" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl cursor-pointer">
-                            <option value="omi">🔵 Omi</option>
-                            <option value="vale">🔴 Vale</option>
-                            <option value="ambos">🟢 Ambos</option>
-                            <option value="mama">🟡 Extra</option>
+                        <select id="owner" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl">
+                            <option value="omi">🔵 Omi</option><option value="vale">🔴 Vale</option><option value="ambos">🟢 Ambos</option><option value="mama">🟡 Extra</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="w-full bg-slate-900 hover:bg-blue-600 text-white py-5 rounded-2xl font-800 text-[11px] uppercase tracking-[0.2em] shadow-xl hover:shadow-blue-500/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
-                        <span>Guardar Registro</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-blue-600 text-white py-5 rounded-2xl font-800 text-[11px] uppercase tracking-[0.2em] shadow-xl transition-all">
+                        Guardar Registro
                     </button>
                 </div>
             </form>
@@ -206,7 +215,7 @@
         const db = getDatabase(app);
 
         let expenses = [], chartInstance = null, currentFilter = 'all', tempImport = [];
-        let bankConfigs = { BANAMEX: { cut: 21, limit: 11 }, SANTANDER: { cut: 1, limit: 20 }, BANCOMER: { cut: 15, limit: 5 } };
+        let bankConfigs = {};
         const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
         async function init() {
@@ -216,18 +225,29 @@
             
             mSel.onchange = ySel.onchange = () => renderAll();
 
-            const configRef = ref(db, 'settings/bankConfigs');
-            const configSnap = await get(configRef);
-            if (configSnap.exists()) bankConfigs = configSnap.val();
-            else await set(configRef, bankConfigs);
-            
-            renderBankConfigRows();
+            // Escuchar cambios en configuración de bancos
+            onValue(ref(db, 'settings/bankConfigs'), (snap) => {
+                bankConfigs = snap.val() || { BANAMEX: { cut: 21, limit: 11 } };
+                updateBankUI();
+                renderAll();
+            });
 
+            // Escuchar gastos
             onValue(ref(db, 'expenses'), (snap) => {
                 const data = snap.val();
                 expenses = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })) : [];
                 renderAll();
             });
+        }
+
+        // Actualiza todos los selectores y la lista de gestión de bancos
+        function updateBankUI() {
+            const selects = document.querySelectorAll('.dynamic-bank-select');
+            selects.forEach(s => {
+                s.innerHTML = '';
+                Object.keys(bankConfigs).forEach(b => s.add(new Option(b, b)));
+            });
+            renderBankConfigRows();
         }
 
         window.renderAll = function() {
@@ -239,7 +259,7 @@
             let totals = { omi: 0, vale: 0, mama: 0 }; 
             const today = new Date();
 
-            ["BANAMEX", "SANTANDER", "BANCOMER"].forEach(bank => {
+            Object.keys(bankConfigs).forEach(bank => {
                 let subtotal = 0, rows = '';
                 const config = bankConfigs[bank];
                 const limitDate = new Date(selY, selM, config.limit);
@@ -255,23 +275,19 @@
                     
                     if (diff >= 0 && diff < exp.totalMonths) {
                         const pay = exp.amount / exp.totalMonths;
-                        
-                        // Cálculo de totales invariante al filtro
                         if (exp.owner === 'omi') totals.omi += pay; 
                         else if (exp.owner === 'vale') totals.vale += pay; 
                         else if (exp.owner === 'mama') totals.mama += pay; 
                         else { totals.omi += (pay/2); totals.vale += (pay/2); }
                         
-                        // Lógica de Filtro Inteligente: Mostrar propios + compartidos
                         if (currentFilter !== 'all') {
                             const isOwnerMatch = exp.owner === currentFilter;
                             const isSharedAndRelevant = exp.owner === 'ambos' && (currentFilter === 'omi' || currentFilter === 'vale');
-                            
                             if (!isOwnerMatch && !isSharedAndRelevant) return;
                         }
 
                         subtotal += pay;
-                        const badgeColor = exp.owner === 'ambos' ? 'text-emerald-500' : (exp.owner === 'omi' ? 'text-blue-500' : 'text-rose-500');
+                        const badgeColor = exp.owner === 'ambos' ? 'text-emerald-500' : (exp.owner === 'omi' ? 'text-blue-500' : (exp.owner === 'mama' ? 'text-amber-500' : 'text-rose-500'));
 
                         rows += `
                         <tr class="border-b border-slate-50 text-xs hover:bg-white/50 transition-colors">
@@ -288,7 +304,7 @@
                     }
                 });
 
-                const bankClass = bank === 'BANAMEX' ? 'bg-banamex' : (bank === 'SANTANDER' ? 'bg-santander' : 'bg-bancomer');
+                const bankClass = `bg-${bank}` in document.styleSheets[0].cssRules ? `bg-${bank}` : 'bg-bank-default';
                 container.innerHTML += `
                 <div class="glass rounded-[28px] overflow-hidden border border-white shadow-sm">
                     <div class="${bankClass} text-white px-6 py-6 flex justify-between items-center cursor-pointer" onclick="toggleTable('${bank}')">
@@ -308,6 +324,67 @@
                 <div class="glass p-6 rounded-[24px] bg-slate-900 text-white shadow-xl"><p class="text-[9px] font-800 text-white/40 uppercase">Global</p><h2 class="text-xl font-800 italic">$${(totals.omi + totals.vale + totals.mama).toLocaleString(undefined, {minimumFractionDigits:2})}</h2></div>`;
         }
 
+        // --- GESTIÓN DE BANCOS ---
+        window.addNewBank = () => {
+            const name = document.getElementById('newBankName').value.trim().toUpperCase();
+            const cut = parseInt(document.getElementById('newBankCut').value);
+            const limit = parseInt(document.getElementById('newBankLimit').value);
+
+            if(!name || isNaN(cut) || isNaN(limit)) return Swal.fire('Error', 'Completa todos los datos del banco', 'error');
+            
+            bankConfigs[name] = { cut, limit };
+            document.getElementById('newBankName').value = '';
+            document.getElementById('newBankCut').value = '';
+            document.getElementById('newBankLimit').value = '';
+            updateBankUI();
+        };
+
+        window.removeBank = (bank) => {
+            Swal.fire({
+                title: `¿Eliminar ${bank}?`,
+                text: "Esto no borrará los gastos ya registrados, pero ya no aparecerá la tabla del banco.",
+                icon: 'warning',
+                showCancelButton: true
+            }).then(result => {
+                if(result.isConfirmed) {
+                    delete bankConfigs[bank];
+                    updateBankUI();
+                }
+            });
+        };
+
+        window.saveBankConfig = async () => {
+            // Recoger valores actuales de los inputs
+            Object.keys(bankConfigs).forEach(b => {
+                bankConfigs[b].cut = parseInt(document.getElementById(`cut_${b}`).value);
+                bankConfigs[b].limit = parseInt(document.getElementById(`limit_${b}`).value);
+            });
+            await set(ref(db, 'settings/bankConfigs'), bankConfigs);
+            closeModal('modalConfig');
+            Swal.fire({title:'Configuración Guardada', icon:'success', timer:1000, showConfirmButton:false});
+        };
+
+        window.renderBankConfigRows = () => {
+            document.getElementById('bankConfigRows').innerHTML = Object.keys(bankConfigs).map(b => `
+                <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                    <div class="flex flex-col">
+                        <span class="font-800 text-xs text-slate-800">${b}</span>
+                        <button onclick="removeBank('${b}')" class="text-[8px] font-black text-red-400 text-left uppercase mt-1">Eliminar</button>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <div class="flex flex-col items-center">
+                            <span class="text-[7px] font-bold text-slate-400 uppercase">Corte</span>
+                            <input type="number" id="cut_${b}" value="${bankConfigs[b].cut}" class="w-12 text-center text-xs font-bold p-1 bg-slate-50">
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-[7px] font-bold text-slate-400 uppercase">Límite</span>
+                            <input type="number" id="limit_${b}" value="${bankConfigs[b].limit}" class="w-12 text-center text-xs font-bold p-1 bg-slate-50">
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+
+        // --- FUNCIONES DE GASTOS ---
         window.deleteItem = async (id) => {
             if((await Swal.fire({title:'¿Borrar registro?', text: 'Se eliminará de la base de datos', icon:'warning', showCancelButton:true})).isConfirmed)
                 await remove(ref(db, `expenses/${id}`));
@@ -328,16 +405,6 @@
             });
             e.target.reset(); closeModal('modalManual');
             Swal.fire({title:'Guardado', icon:'success', timer:800, showConfirmButton:false});
-        };
-
-        window.saveBankConfig = async () => {
-            ["BANAMEX", "SANTANDER", "BANCOMER"].forEach(b => {
-                bankConfigs[b].cut = parseInt(document.getElementById(`cut_${b}`).value);
-                bankConfigs[b].limit = parseInt(document.getElementById(`limit_${b}`).value);
-            });
-            await set(ref(db, 'settings/bankConfigs'), bankConfigs);
-            closeModal('modalConfig');
-            renderAll();
         };
 
         window.saveBulk = async () => {
@@ -399,22 +466,12 @@
             document.getElementById(`f-${f}`).classList.add('bg-slate-900', 'text-white');
             renderAll(); 
         }
-        window.renderBankConfigRows = () => {
-            document.getElementById('bankConfigRows').innerHTML = Object.keys(bankConfigs).map(b => `
-                <div class="flex items-center justify-between bg-slate-50 p-3 rounded-xl">
-                    <span class="font-800 text-[10px] uppercase text-slate-500">${b}</span>
-                    <div class="flex gap-2 items-center">
-                        <div class="text-[8px] uppercase font-bold opacity-40">Corte/Límite</div>
-                        <input type="number" id="cut_${b}" value="${bankConfigs[b].cut}" class="w-12 text-center text-xs font-bold p-1">
-                        <input type="number" id="limit_${b}" value="${bankConfigs[b].limit}" class="w-12 text-center text-xs font-bold p-1">
-                    </div>
-                </div>`).join('');
-        }
 
         window.openCharts = () => {
             const selYear = parseInt(document.getElementById('yearSelector').value);
             document.getElementById('chartYearTitle').innerText = selYear;
             let ds = { omi: Array(12).fill(0), vale: Array(12).fill(0), mama: Array(12).fill(0), ambos: Array(12).fill(0) };
+            
             expenses.forEach(exp => {
                 for(let m = 0; m < 12; m++) {
                     const start = new Date(exp.startYear, exp.startMonth), curr = new Date(selYear, m);
@@ -422,6 +479,7 @@
                     if (diff >= 0 && diff < exp.totalMonths) ds[exp.owner][m] += (exp.amount / exp.totalMonths);
                 }
             });
+
             if(chartInstance) chartInstance.destroy();
             chartInstance = new Chart(document.getElementById('yearlyChart').getContext('2d'), {
                 type: 'line',
@@ -430,6 +488,7 @@
                     datasets: [
                         { label: 'Omi', data: ds.omi, borderColor: '#3b82f6', tension: 0.4, fill: false },
                         { label: 'Vale', data: ds.vale, borderColor: '#f43f5e', tension: 0.4, fill: false },
+                        { label: 'Extra', data: ds.mama, borderColor: '#f59e0b', tension: 0.4, fill: false },
                         { label: 'Ambos', data: ds.ambos, borderColor: '#10b981', tension: 0.4, borderDash: [5,5], fill: false }
                     ]
                 },
