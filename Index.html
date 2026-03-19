@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARJETAS VALOMI - MASTER CLOUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f0f4f8; color: #1e293b; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .modal-bg { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; position: fixed; inset: 0; z-index: 50; align-items: center; justify-content: center; }
+        .modal-content { width: 95%; max-width: 800px; max-height: 90vh; overflow-y: auto; }
+        .btn-action { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .bg-banamex { background: linear-gradient(135deg, #004691 0%, #002a57 100%); }
+        .bg-santander { background: linear-gradient(135deg, #ec0000 0%, #a30000 100%); }
+        .bg-bancomer { background: linear-gradient(135deg, #004481 0%, #00264d 100%); }
+        input, select, textarea { border: 1.5px solid #e2e8f0; padding: 12px; border-radius: 12px; outline: none; width: 100%; font-size: 14px; background: white; }
+        .collapsible-content { transition: max-height 0.3s ease-out; overflow: hidden; max-height: 2000px; }
+        .collapsed { max-height: 0 !important; }
+        .swal2-popup { border-radius: 24px !important; font-family: 'Plus Jakarta Sans', sans-serif !important; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <div class="max-w-6xl mx-auto px-6 pt-10">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center shadow-2xl text-white font-black text-2xl italic">VO</div>
+                <div>
+                    <h1 class="text-3xl font-800 tracking-tighter">Val<span class="text-blue-600">Omi</span></h1>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Realtime Dashboard</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="glass p-2 rounded-2xl flex gap-1 shadow-sm border border-white">
+                    <select id="monthSelector" class="bg-transparent border-none font-bold text-slate-700 w-32 py-1"></select>
+                    <select id="yearSelector" class="bg-transparent border-none font-bold text-slate-700 w-24 py-1"></select>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-wrap gap-4 mb-10">
+            <button onclick="openModal('modalConfig')" class="btn-action flex-1 min-w-[140px] bg-white border border-slate-200 p-4 rounded-[22px] flex items-center gap-3 shadow-sm">
+                <span class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl">⚙️</span>
+                <div class="text-left"><p class="text-[9px] font-800 text-slate-400 uppercase">Fechas</p><p class="text-xs font-800 text-slate-700">Corte</p></div>
+            </button>
+            <button onclick="openModal('modalImport')" class="btn-action flex-1 min-w-[140px] bg-white border border-slate-200 p-4 rounded-[22px] flex items-center gap-3 shadow-sm">
+                <span class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl">🚀</span>
+                <div class="text-left"><p class="text-[9px] font-800 text-slate-400 uppercase">Cargar</p><p class="text-xs font-800 text-slate-700">Screen</p></div>
+            </button>
+            <button onclick="openCharts()" class="btn-action flex-1 min-w-[140px] bg-white border border-slate-200 p-4 rounded-[22px] flex items-center gap-3 shadow-sm">
+                <span class="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl">📈</span>
+                <div class="text-left"><p class="text-[9px] font-800 text-slate-400 uppercase">Gráficas</p><p class="text-xs font-800 text-slate-700">Anuales</p></div>
+            </button>
+            <button onclick="openModal('modalManual')" class="btn-action flex-1 min-w-[140px] bg-slate-900 p-4 rounded-[22px] flex items-center gap-3 shadow-lg">
+                <span class="w-10 h-10 bg-slate-800 text-white rounded-xl flex items-center justify-center text-xl">✍️</span>
+                <div class="text-left"><p class="text-[9px] font-800 text-white/50 uppercase">Registrar</p><p class="text-xs font-800 text-white">Nuevo</p></div>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12" id="resumenArea"></div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div class="flex gap-1 p-1.5 glass rounded-2xl shadow-sm border border-white overflow-x-auto max-w-full">
+                <button onclick="setFilter('all')" id="f-all" class="f-btn px-4 py-2 rounded-xl text-[10px] font-800 uppercase bg-slate-900 text-white transition-all whitespace-nowrap">Todos</button>
+                <button onclick="setFilter('omi')" id="f-omi" class="f-btn px-4 py-2 rounded-xl text-[10px] font-800 uppercase text-slate-500 hover:bg-white transition-all whitespace-nowrap">Omi</button>
+                <button onclick="setFilter('vale')" id="f-vale" class="f-btn px-4 py-2 rounded-xl text-[10px] font-800 uppercase text-slate-500 hover:bg-white transition-all whitespace-nowrap">Vale</button>
+                <button onclick="setFilter('mama')" id="f-mama" class="f-btn px-4 py-2 rounded-xl text-[10px] font-800 uppercase text-slate-500 hover:bg-white transition-all whitespace-nowrap">Extra</button>
+                <button onclick="setFilter('ambos')" id="f-ambos" class="f-btn px-4 py-2 rounded-xl text-[10px] font-800 uppercase text-slate-500 hover:bg-white transition-all whitespace-nowrap">Ambos</button>
+            </div>
+            
+            <button onclick="toggleAllTables()" class="text-[10px] font-800 uppercase tracking-widest text-blue-600 bg-blue-50 px-5 py-3 rounded-xl border border-blue-100 hover:bg-blue-600 hover:text-white transition-all">
+                ↔️ Expandir / Colapsar Todo
+            </button>
+        </div>
+
+        <div id="tablesContainer" class="space-y-12"></div>
+    </div>
+
+    <div id="modalCharts" class="modal-bg">
+        <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white">
+            <button onclick="closeModal('modalCharts')" class="absolute top-6 right-6 text-slate-400">✕</button>
+            <h3 class="text-xl font-800 mb-2 flex items-center gap-2">📈 Tendencia de Gastos <span id="chartYearTitle" class="text-blue-600"></span></h3>
+            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-inner h-[450px]">
+                <canvas id="yearlyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalConfig" class="modal-bg">
+        <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white max-w-md">
+            <button onclick="closeModal('modalConfig')" class="absolute top-6 right-6 text-slate-400">✕</button>
+            <h3 class="text-xl font-800 mb-6 flex items-center gap-2">⚙️ Fechas de Corte</h3>
+            <div id="bankConfigRows" class="space-y-4"></div>
+            <button onclick="saveBankConfig()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-800 text-xs uppercase tracking-widest mt-6">Guardar Configuración</button>
+        </div>
+    </div>
+
+    <div id="modalImport" class="modal-bg">
+        <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white max-w-4xl">
+            <button onclick="closeModal('modalImport')" class="absolute top-6 right-6 text-slate-400">✕</button>
+            <h3 class="text-xl font-800 mb-6 italic">🚀 Importador JSON</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <textarea id="rawText" rows="8" class="font-mono text-xs" placeholder='Pega el JSON aquí...'></textarea>
+                    <select id="importCard" class="font-bold"><option>BANAMEX</option><option>SANTANDER</option><option>BANCOMER</option></select>
+                    <button onclick="processText()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-800 text-xs uppercase tracking-widest">Pre-visualizar</button>
+                </div>
+                <div id="importPreview" class="bg-slate-50 p-6 rounded-xl border border-slate-200 overflow-y-auto max-h-[400px]"></div>
+                <button id="saveImportBtn" onclick="saveBulk()" class="hidden col-span-2 bg-emerald-600 text-white py-4 rounded-xl font-800 text-xs uppercase tracking-widest shadow-lg">Confirmar e Importar todo</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalManual" class="modal-bg">
+        <div class="modal-content glass p-8 rounded-[32px] shadow-2xl relative border border-white max-w-md">
+            <button onclick="closeModal('modalManual')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors">✕</button>
+            
+            <div class="mb-8 text-center">
+                <div class="inline-flex items-center justify-center w-14 h-14 bg-slate-900 text-white rounded-2xl mb-4 shadow-xl text-xl">✍️</div>
+                <h3 class="text-2xl font-800 tracking-tight text-slate-800">Nuevo Registro</h3>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Sincronización Realtime</p>
+            </div>
+
+            <form id="expenseForm" class="space-y-5">
+                <div class="group">
+                    <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">¿En qué gastaste?</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-lg opacity-40 group-focus-within:opacity-100 transition-opacity">🛍️</span>
+                        <input type="text" id="concept" required class="pl-12 bg-white/50 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all rounded-2xl" placeholder="...">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="group">
+                        <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Monto Total</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 font-black text-slate-400 group-focus-within:text-emerald-600 transition-colors">$</span>
+                            <input type="number" id="amount" step="0.01" required class="pl-10 bg-white/50 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all rounded-2xl" placeholder="0.00">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Plan MSI</label>
+                        <select id="manualMonths" class="bg-white/50 border-slate-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-all font-bold text-slate-700 rounded-2xl cursor-pointer">
+                            <option value="1">💳 Único</option>
+                            <option value="3">🗓️ 3 MSI</option>
+                            <option value="6">🗓️ 6 MSI</option>
+                            <option value="12">🗓️ 12 MSI</option>
+                            <option value="18">🗓️ 18 MSI</option>
+                            <option value="24">🗓️ 24 MSI</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Banco</label>
+                        <select id="cardType" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl cursor-pointer">
+                            <option>BANAMEX</option>
+                            <option>SANTANDER</option>
+                            <option>BANCOMER</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-800 text-slate-400 uppercase ml-2 mb-1.5 block tracking-widest">Responsable</label>
+                        <select id="owner" class="bg-white/50 border-slate-200 font-bold text-slate-700 rounded-2xl cursor-pointer">
+                            <option value="omi">🔵 Omi</option>
+                            <option value="vale">🔴 Vale</option>
+                            <option value="ambos">🟢 Ambos</option>
+                            <option value="mama">🟡 Extra</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-blue-600 text-white py-5 rounded-2xl font-800 text-[11px] uppercase tracking-[0.2em] shadow-xl hover:shadow-blue-500/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                        <span>Guardar Registro</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXeIuTdN1-rt1mfYjRi3ovrSrWAGSrBnI",
+            authDomain: "tarjetas-b2c31.firebaseapp.com",
+            databaseURL: "https://tarjetas-b2c31-default-rtdb.firebaseio.com",
+            projectId: "tarjetas-b2c31",
+            storageBucket: "tarjetas-b2c31.firebasestorage.app",
+            messagingSenderId: "529416579292",
+            appId: "1:529416579292:web:3fc12b470f6e7d44a86c19",
+            measurementId: "G-W5BTSH0M1N"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let expenses = [], chartInstance = null, currentFilter = 'all', tempImport = [];
+        let bankConfigs = { BANAMEX: { cut: 21, limit: 11 }, SANTANDER: { cut: 1, limit: 20 }, BANCOMER: { cut: 15, limit: 5 } };
+        const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+        async function init() {
+            const mSel = document.getElementById('monthSelector'), ySel = document.getElementById('yearSelector'), now = new Date();
+            months.forEach((m, i) => mSel.add(new Option(m, i, i === now.getMonth())));
+            for(let y = 2025; y <= 2028; y++) ySel.add(new Option(y, y, y === now.getFullYear()));
+            
+            mSel.onchange = ySel.onchange = () => renderAll();
+
+            const configRef = ref(db, 'settings/bankConfigs');
+            const configSnap = await get(configRef);
+            if (configSnap.exists()) bankConfigs = configSnap.val();
+            else await set(configRef, bankConfigs);
+            
+            renderBankConfigRows();
+
+            onValue(ref(db, 'expenses'), (snap) => {
+                const data = snap.val();
+                expenses = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })) : [];
+                renderAll();
+            });
+        }
+
+        window.renderAll = function() {
+            const selM = parseInt(document.getElementById('monthSelector').value);
+            const selY = parseInt(document.getElementById('yearSelector').value);
+            const container = document.getElementById('tablesContainer');
+            if(!container) return;
+            container.innerHTML = ''; 
+            let totals = { omi: 0, vale: 0, mama: 0 }; 
+            const today = new Date();
+
+            ["BANAMEX", "SANTANDER", "BANCOMER"].forEach(bank => {
+                let subtotal = 0, rows = '';
+                const config = bankConfigs[bank];
+                const limitDate = new Date(selY, selM, config.limit);
+                const diffDays = Math.ceil((limitDate - today) / 86400000);
+                
+                let deadlineBadge = `<span class="text-[9px] font-black opacity-30 uppercase italic">Día ${config.limit}</span>`;
+                if(diffDays >= 0 && diffDays <= 5) deadlineBadge = `<span class="bg-amber-400 text-amber-900 px-3 py-1 rounded-full text-[9px] font-black animate-pulse">Límite en ${diffDays} días</span>`;
+
+                expenses.filter(e => e.card === bank).forEach(exp => {
+                    const start = new Date(exp.startYear, exp.startMonth);
+                    const curr = new Date(selY, selM);
+                    const diff = (curr.getFullYear() - start.getFullYear()) * 12 + (curr.getMonth() - start.getMonth());
+                    
+                    if (diff >= 0 && diff < exp.totalMonths) {
+                        const pay = exp.amount / exp.totalMonths;
+                        
+                        // Cálculo de totales invariante al filtro
+                        if (exp.owner === 'omi') totals.omi += pay; 
+                        else if (exp.owner === 'vale') totals.vale += pay; 
+                        else if (exp.owner === 'mama') totals.mama += pay; 
+                        else { totals.omi += (pay/2); totals.vale += (pay/2); }
+                        
+                        // Lógica de Filtro Inteligente: Mostrar propios + compartidos
+                        if (currentFilter !== 'all') {
+                            const isOwnerMatch = exp.owner === currentFilter;
+                            const isSharedAndRelevant = exp.owner === 'ambos' && (currentFilter === 'omi' || currentFilter === 'vale');
+                            
+                            if (!isOwnerMatch && !isSharedAndRelevant) return;
+                        }
+
+                        subtotal += pay;
+                        const badgeColor = exp.owner === 'ambos' ? 'text-emerald-500' : (exp.owner === 'omi' ? 'text-blue-500' : 'text-rose-500');
+
+                        rows += `
+                        <tr class="border-b border-slate-50 text-xs hover:bg-white/50 transition-colors">
+                            <td class="px-6 py-4">
+                                <span class="font-800 text-slate-700 block uppercase">${exp.concept}</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px] text-slate-400 italic">${exp.totalMonths > 1 ? `Pago ${diff+1}/${exp.totalMonths}` : 'Único'}</span>
+                                    <span class="text-[8px] font-black uppercase ${badgeColor}">${exp.owner}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 font-black text-slate-900 text-right">$${pay.toFixed(2)}</td>
+                            <td class="px-6 py-4 text-right"><button onclick="deleteItem('${exp.id}')" class="text-slate-200 hover:text-red-500">✕</button></td>
+                        </tr>`;
+                    }
+                });
+
+                const bankClass = bank === 'BANAMEX' ? 'bg-banamex' : (bank === 'SANTANDER' ? 'bg-santander' : 'bg-bancomer');
+                container.innerHTML += `
+                <div class="glass rounded-[28px] overflow-hidden border border-white shadow-sm">
+                    <div class="${bankClass} text-white px-6 py-6 flex justify-between items-center cursor-pointer" onclick="toggleTable('${bank}')">
+                        <div><h3 class="font-800 text-xs tracking-widest uppercase">${bank}</h3>${deadlineBadge}</div>
+                        <h4 class="text-3xl font-800 italic">$${subtotal.toLocaleString(undefined, {minimumFractionDigits:2})}</h4>
+                    </div>
+                    <div id="content-${bank}" class="collapsible-content">
+                        <table class="w-full"><tbody>${rows || '<tr><td class="p-10 text-center text-slate-300 italic">Sin movimientos este mes</td></tr>'}</tbody></table>
+                    </div>
+                </div>`;
+            });
+
+            document.getElementById('resumenArea').innerHTML = `
+                <div class="glass p-6 rounded-[24px] border-b-4 border-blue-500"><p class="text-[9px] font-800 text-slate-400 uppercase">Omi</p><h2 class="text-xl font-800 italic">$${totals.omi.toLocaleString(undefined, {minimumFractionDigits:2})}</h2></div>
+                <div class="glass p-6 rounded-[24px] border-b-4 border-rose-500"><p class="text-[9px] font-800 text-slate-400 uppercase">Vale</p><h2 class="text-xl font-800 italic">$${totals.vale.toLocaleString(undefined, {minimumFractionDigits:2})}</h2></div>
+                <div class="glass p-6 rounded-[24px] border-b-4 border-amber-500"><p class="text-[9px] font-800 text-slate-400 uppercase">Extra</p><h2 class="text-xl font-800 italic">$${totals.mama.toLocaleString(undefined, {minimumFractionDigits:2})}</h2></div>
+                <div class="glass p-6 rounded-[24px] bg-slate-900 text-white shadow-xl"><p class="text-[9px] font-800 text-white/40 uppercase">Global</p><h2 class="text-xl font-800 italic">$${(totals.omi + totals.vale + totals.mama).toLocaleString(undefined, {minimumFractionDigits:2})}</h2></div>`;
+        }
+
+        window.deleteItem = async (id) => {
+            if((await Swal.fire({title:'¿Borrar registro?', text: 'Se eliminará de la base de datos', icon:'warning', showCancelButton:true})).isConfirmed)
+                await remove(ref(db, `expenses/${id}`));
+        }
+
+        document.getElementById('expenseForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const newRef = push(ref(db, 'expenses'));
+            await set(newRef, {
+                concept: document.getElementById('concept').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                card: document.getElementById('cardType').value,
+                owner: document.getElementById('owner').value,
+                totalMonths: parseInt(document.getElementById('manualMonths').value) || 1,
+                startMonth: parseInt(document.getElementById('monthSelector').value),
+                startYear: parseInt(document.getElementById('yearSelector').value),
+                createdAt: new Date().toISOString()
+            });
+            e.target.reset(); closeModal('modalManual');
+            Swal.fire({title:'Guardado', icon:'success', timer:800, showConfirmButton:false});
+        };
+
+        window.saveBankConfig = async () => {
+            ["BANAMEX", "SANTANDER", "BANCOMER"].forEach(b => {
+                bankConfigs[b].cut = parseInt(document.getElementById(`cut_${b}`).value);
+                bankConfigs[b].limit = parseInt(document.getElementById(`limit_${b}`).value);
+            });
+            await set(ref(db, 'settings/bankConfigs'), bankConfigs);
+            closeModal('modalConfig');
+            renderAll();
+        };
+
+        window.saveBulk = async () => {
+            const bank = document.getElementById('importCard').value, m = parseInt(document.getElementById('monthSelector').value), y = parseInt(document.getElementById('yearSelector').value);
+            for(const item of tempImport) {
+                const start = new Date(y, m + item.offset);
+                const newRef = push(ref(db, 'expenses'));
+                await set(newRef, {
+                    concept: item.concept, amount: item.amount, card: bank, owner: item.owner, 
+                    totalMonths: item.totalMonths, startMonth: start.getMonth(), startYear: start.getFullYear(), 
+                    createdAt: new Date().toISOString()
+                });
+            }
+            tempImport = []; closeModal('modalImport');
+            Swal.fire({title:'Importación Exitosa', icon:'success', timer:1500});
+        };
+
+        window.processText = () => {
+            try {
+                const data = JSON.parse(document.getElementById('rawText').value);
+                tempImport = data.map(item => {
+                    let totalMonths = 1, offset = 0;
+                    const msiMatch = item.concept.match(/(\d+)\s?(?:de|\/)\s?(\d+)/);
+                    if(msiMatch) { totalMonths = parseInt(msiMatch[2]); offset = -(parseInt(msiMatch[1]) - 1); }
+                    return { id: Math.random(), concept: item.concept, amount: item.amount, totalMonths, offset, owner: 'ambos' };
+                });
+                renderPreview();
+            } catch (e) { Swal.fire('Error', 'El formato JSON no es válido', 'error'); }
+        }
+
+        window.renderPreview = () => {
+            document.getElementById('importPreview').innerHTML = tempImport.map(item => `
+                <div class="bg-white p-4 rounded-xl border mb-3 shadow-sm">
+                    <p class="text-[10px] font-800 uppercase text-slate-400">${item.concept}</p>
+                    <p class="text-sm font-black text-blue-600">$${item.amount.toFixed(2)}</p>
+                    <div class="flex gap-1 mt-3">
+                        ${['omi','vale','ambos','mama'].map(o => `
+                            <button onclick="assignOwner(${item.id},'${o}')" class="flex-1 py-1.5 rounded-lg text-[7px] font-black border transition-all ${item.owner===o?'bg-slate-900 text-white border-slate-900':'bg-white text-slate-400 border-slate-100'}">
+                                ${o.toUpperCase()}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>`).join('');
+            document.getElementById('saveImportBtn').classList.remove('hidden');
+        }
+
+        window.assignOwner = (id, owner) => { tempImport.find(x => x.id === id).owner = owner; renderPreview(); }
+        window.openModal = (id) => document.getElementById(id).style.display = 'flex';
+        window.closeModal = (id) => document.getElementById(id).style.display = 'none';
+        window.toggleTable = (b) => document.getElementById(`content-${b}`).classList.toggle('collapsed');
+        window.toggleAllTables = () => {
+            const tables = document.querySelectorAll('.collapsible-content');
+            const anyVisible = Array.from(tables).some(t => !t.classList.contains('collapsed'));
+            tables.forEach(t => anyVisible ? t.classList.add('collapsed') : t.classList.remove('collapsed'));
+        };
+        window.setFilter = (f) => { 
+            currentFilter = f; 
+            document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('bg-slate-900', 'text-white'));
+            document.getElementById(`f-${f}`).classList.add('bg-slate-900', 'text-white');
+            renderAll(); 
+        }
+        window.renderBankConfigRows = () => {
+            document.getElementById('bankConfigRows').innerHTML = Object.keys(bankConfigs).map(b => `
+                <div class="flex items-center justify-between bg-slate-50 p-3 rounded-xl">
+                    <span class="font-800 text-[10px] uppercase text-slate-500">${b}</span>
+                    <div class="flex gap-2 items-center">
+                        <div class="text-[8px] uppercase font-bold opacity-40">Corte/Límite</div>
+                        <input type="number" id="cut_${b}" value="${bankConfigs[b].cut}" class="w-12 text-center text-xs font-bold p-1">
+                        <input type="number" id="limit_${b}" value="${bankConfigs[b].limit}" class="w-12 text-center text-xs font-bold p-1">
+                    </div>
+                </div>`).join('');
+        }
+
+        window.openCharts = () => {
+            const selYear = parseInt(document.getElementById('yearSelector').value);
+            document.getElementById('chartYearTitle').innerText = selYear;
+            let ds = { omi: Array(12).fill(0), vale: Array(12).fill(0), mama: Array(12).fill(0), ambos: Array(12).fill(0) };
+            expenses.forEach(exp => {
+                for(let m = 0; m < 12; m++) {
+                    const start = new Date(exp.startYear, exp.startMonth), curr = new Date(selYear, m);
+                    const diff = (curr.getFullYear() - start.getFullYear()) * 12 + (curr.getMonth() - start.getMonth());
+                    if (diff >= 0 && diff < exp.totalMonths) ds[exp.owner][m] += (exp.amount / exp.totalMonths);
+                }
+            });
+            if(chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(document.getElementById('yearlyChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        { label: 'Omi', data: ds.omi, borderColor: '#3b82f6', tension: 0.4, fill: false },
+                        { label: 'Vale', data: ds.vale, borderColor: '#f43f5e', tension: 0.4, fill: false },
+                        { label: 'Ambos', data: ds.ambos, borderColor: '#10b981', tension: 0.4, borderDash: [5,5], fill: false }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            openModal('modalCharts');
+        }
+
+        init();
+    </script>
+</body>
+</html>
