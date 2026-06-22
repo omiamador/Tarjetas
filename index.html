@@ -25,18 +25,186 @@
     .badge { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
     .chip { background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe; }
     .kpi-title { font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:800; color:#64748b; }
-    .tab-active { background:#0f172a; color:white; }
+    .tab-active { background:var(--tab-active-bg); color:var(--tab-active-text); }
     .table-wrap { overflow:auto; }
     .table-wrap table { width:100%; min-width: 860px; }
     .sticky-head thead th { position: sticky; top: 0; background: rgba(248,250,252,.98); z-index:2; }
     .empty { color:#94a3b8; font-style:italic; text-align:center; padding:26px 12px; }
     .line-clamp-2 { display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden; }
-    .bg-BANAMEX { background: linear-gradient(135deg, #004691 0%, #002a57 100%); }
-    .bg-SANTANDER { background: linear-gradient(135deg, #ec0000 0%, #970f0f 100%); }
-    .bg-BBVA, .bg-BANCOMER { background: linear-gradient(135deg, #004481 0%, #022c5e 100%); }
-    .bg-AMEX { background: linear-gradient(135deg, #0070d5 0%, #083b71 100%); }
-    .bg-NU { background: linear-gradient(135deg, #820ad1 0%, #4b067a 100%); }
-    .bg-default-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #334155 100%); }
+    /* =====================
+       PALETA EDITABLE GLOBAL
+       Cambia aquí los colores de botones, pestañas, personas y tarjetas.
+       ===================== */
+    :root {
+      --tab-active-bg:#0f172a;
+      --tab-active-text:#ffffff;
+
+      --btn-dark:#0f172a;
+      --btn-dark-hover:#1e293b;
+      --btn-dark-shadow:rgba(15,23,42,.20);
+
+      --btn-primary:#2563eb;
+      --btn-primary-hover:#1d4ed8;
+      --btn-primary-shadow:rgba(37,99,235,.22);
+
+      --btn-success:#10b981;
+      --btn-success-hover:#059669;
+      --btn-success-shadow:rgba(16,185,129,.22);
+
+      --btn-warning:#f59e0b;
+      --btn-warning-hover:#d97706;
+      --btn-warning-shadow:rgba(245,158,11,.22);
+
+      --btn-danger:#f43f5e;
+      --btn-danger-hover:#e11d48;
+      --btn-danger-shadow:rgba(244,63,94,.22);
+
+      --btn-soft-danger-bg:#fff1f2;
+      --btn-soft-danger-border:#fecdd3;
+      --btn-soft-danger-text:#e11d48;
+
+      --feature-cargo:#4f46e5;
+      --feature-cargo-hover:#4338ca;
+      --feature-cargo-shadow:rgba(79,70,229,.24);
+
+      --feature-estado:#10b981;
+      --feature-estado-hover:#059669;
+      --feature-estado-shadow:rgba(16,185,129,.24);
+
+      --feature-tarjetas:#f59e0b;
+      --feature-tarjetas-hover:#d97706;
+      --feature-tarjetas-shadow:rgba(245,158,11,.24);
+
+      --feature-personas:#f43f5e;
+      --feature-personas-hover:#e11d48;
+      --feature-personas-shadow:rgba(244,63,94,.24);
+
+      --bank-banamex-start:#004691;
+      --bank-banamex-end:#002a57;
+      --bank-banamex-soft:#eef4ff;
+      --bank-banamex-border:#bfd6ff;
+      --bank-banamex-text:#0b3b75;
+
+      --bank-santander-start:#ec0000;
+      --bank-santander-end:#970f0f;
+      --bank-santander-soft:#fff1f2;
+      --bank-santander-border:#fecdd3;
+      --bank-santander-text:#9f1239;
+
+      --bank-bbva-start:#004481;
+      --bank-bbva-end:#022c5e;
+      --bank-bbva-soft:#eff6ff;
+      --bank-bbva-border:#bfdbfe;
+      --bank-bbva-text:#1d4ed8;
+
+      --bank-amex-start:#0070d5;
+      --bank-amex-end:#083b71;
+      --bank-amex-soft:#eff6ff;
+      --bank-amex-border:#93c5fd;
+      --bank-amex-text:#1d4ed8;
+
+      --bank-nu-start:#820ad1;
+      --bank-nu-end:#4b067a;
+      --bank-nu-soft:#faf5ff;
+      --bank-nu-border:#d8b4fe;
+      --bank-nu-text:#7e22ce;
+
+      --bank-default-start:#0f172a;
+      --bank-default-mid:#1e293b;
+      --bank-default-end:#334155;
+      --bank-default-soft:#f8fafc;
+      --bank-default-border:#cbd5e1;
+      --bank-default-text:#334155;
+    }
+
+    .theme-btn {
+      border:1px solid transparent;
+      color:#fff !important;
+      box-shadow:0 10px 24px rgba(15,23,42,.08);
+    }
+    .theme-btn-dark { background:var(--btn-dark) !important; box-shadow:0 10px 24px var(--btn-dark-shadow); }
+    .theme-btn-dark:hover { background:var(--btn-dark-hover) !important; }
+    .theme-btn-primary { background:var(--btn-primary) !important; box-shadow:0 10px 24px var(--btn-primary-shadow); }
+    .theme-btn-primary:hover { background:var(--btn-primary-hover) !important; }
+    .theme-btn-success { background:var(--btn-success) !important; box-shadow:0 10px 24px var(--btn-success-shadow); }
+    .theme-btn-success:hover { background:var(--btn-success-hover) !important; }
+    .theme-btn-warning { background:var(--btn-warning) !important; box-shadow:0 10px 24px var(--btn-warning-shadow); }
+    .theme-btn-warning:hover { background:var(--btn-warning-hover) !important; }
+    .theme-btn-danger { background:var(--btn-danger) !important; box-shadow:0 10px 24px var(--btn-danger-shadow); }
+    .theme-btn-danger:hover { background:var(--btn-danger-hover) !important; }
+    .theme-btn-danger-soft {
+      background:var(--btn-soft-danger-bg) !important;
+      border-color:var(--btn-soft-danger-border) !important;
+      color:var(--btn-soft-danger-text) !important;
+      box-shadow:none;
+    }
+    .theme-btn-danger-soft:hover { filter:brightness(0.98); }
+
+    .feature-btn {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      width:100%;
+      padding:2rem;
+      border-radius:1.5rem;
+      color:#fff !important;
+      transition:all .2s ease;
+    }
+    .feature-btn:hover { transform:translateY(-2px); filter:brightness(1.04); }
+    .feature-btn-cargo { background:var(--feature-cargo) !important; box-shadow:0 10px 24px var(--feature-cargo-shadow); }
+    .feature-btn-cargo:hover { background:var(--feature-cargo-hover) !important; }
+    .feature-btn-estado { background:var(--feature-estado) !important; box-shadow:0 10px 24px var(--feature-estado-shadow); }
+    .feature-btn-estado:hover { background:var(--feature-estado-hover) !important; }
+    .feature-btn-tarjetas { background:var(--feature-tarjetas) !important; box-shadow:0 10px 24px var(--feature-tarjetas-shadow); }
+    .feature-btn-tarjetas:hover { background:var(--feature-tarjetas-hover) !important; }
+    .feature-btn-personas { background:var(--feature-personas) !important; box-shadow:0 10px 24px var(--feature-personas-shadow); }
+    .feature-btn-personas:hover { background:var(--feature-personas-hover) !important; }
+
+    .auto-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--chip-border,#dbeafe);
+      background:var(--chip-bg,#eff6ff);
+      color:var(--chip-text,#1d4ed8);
+      font-size:11px;
+      font-weight:800;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .auto-chip-dot {
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--chip-dot,#2563eb);
+      flex-shrink:0;
+      box-shadow:0 0 0 5px rgba(255,255,255,.45);
+    }
+    .auto-stack { display:flex; flex-wrap:wrap; gap:8px; }
+    .auto-data-row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0;
+      border-bottom:1px solid rgba(226,232,240,.9);
+    }
+    .auto-data-row:last-child { border-bottom:none; padding-bottom:0; }
+    .auto-surface {
+      background:var(--surface-bg,#ffffff);
+      border:1px solid var(--surface-border,#e2e8f0);
+    }
+
+    .bg-BANAMEX { background: linear-gradient(135deg, var(--bank-banamex-start) 0%, var(--bank-banamex-end) 100%); }
+    .bg-SANTANDER { background: linear-gradient(135deg, var(--bank-santander-start) 0%, var(--bank-santander-end) 100%); }
+    .bg-BBVA, .bg-BANCOMER { background: linear-gradient(135deg, var(--bank-bbva-start) 0%, var(--bank-bbva-end) 100%); }
+    .bg-AMEX { background: linear-gradient(135deg, var(--bank-amex-start) 0%, var(--bank-amex-end) 100%); }
+    .bg-NU { background: linear-gradient(135deg, var(--bank-nu-start) 0%, var(--bank-nu-end) 100%); }
+    .bg-default-card { background: linear-gradient(135deg, var(--bank-default-start) 0%, var(--bank-default-mid) 60%, var(--bank-default-end) 100%); }
     .warn { background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; }
     .ok { background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; }
     .helper { font-size:12px; color:#64748b; }
@@ -135,7 +303,7 @@ select, input {
   <div class="glass rounded-[32px] p-6 md:p-8 flex flex-col lg:flex-row gap-6 items-center justify-between border border-white/20 shadow-xl w-full">
     
     <div class="flex items-center gap-5 w-full lg:w-auto">
-      <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-white-600 rounded-3xl flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-indigo-200">
+      <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-indigo-200">
         <img src="logo.png" alt="Logo" class="h-12 w-12 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
         <span class="hidden" style="display: none;">VO</span>
       </div>
@@ -183,22 +351,22 @@ select, input {
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
       
-      <button onclick="openChargeModal()" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 w-full shadow-lg shadow-indigo-200">
+      <button onclick="openChargeModal()" class="feature-btn feature-btn-cargo">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
         <span class="font-bold text-lg uppercase tracking-wider">Cargo</span>
       </button>
       
-      <button onclick="openModal('modalStatement')" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-emerald-500 text-white hover:bg-emerald-600 transition-all duration-300 w-full shadow-lg shadow-emerald-200">
+      <button onclick="openModal('modalStatement')" class="feature-btn feature-btn-estado">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
         <span class="font-bold text-lg uppercase tracking-wider">Estado</span>
       </button>
       
-      <button onclick="openModal('modalCards')" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-amber-500 text-white hover:bg-amber-600 transition-all duration-300 w-full shadow-lg shadow-amber-200">
+      <button onclick="openModal('modalCards')" class="feature-btn feature-btn-tarjetas">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
         <span class="font-bold text-lg uppercase tracking-wider">Tarjetas</span>
       </button>
       
-      <button onclick="openModal('modalPeople')" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-rose-500 text-white hover:bg-rose-600 transition-all duration-300 w-full shadow-lg shadow-rose-200">
+      <button onclick="openModal('modalPeople')" class="feature-btn feature-btn-personas">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         <span class="font-bold text-lg uppercase tracking-wider">Personas</span>
       </button>
@@ -220,14 +388,6 @@ select, input {
         <span class="text-xs text-slate-400">Esto representa lo que corresponde cobrar en el mes seleccionado.</span>
       </div>
       <div id="cardSummaryArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
-    </div>
-
-    <div class="xl:col-span-12 glass rounded-[28px] p-5 md:p-6">
-      <div class="mb-4">
-        <p class="kpi-title">Resumen por persona</p>
-        <h2 class="text-xl font-extrabold">Personas extras</h2>
-      </div>
-      <div id="ownerBalanceArea" class="space-y-3"></div>
     </div>
   </div>
 </section>
@@ -252,7 +412,7 @@ select, input {
             <input id="filterSearch" type="text" placeholder="Concepto, nota, etiqueta..." />
           </div>
           <div class="flex md:justify-end">
-            <button onclick="renderAll()" class="btn w-full md:w-auto rounded-2xl bg-slate-900 text-white px-5 py-3 text-xs font-extrabold uppercase tracking-[.18em]">Aplicar filtros</button>
+            <button onclick="renderAll()" class="btn theme-btn theme-btn-dark w-full md:w-auto rounded-2xl px-5 py-3 text-xs font-extrabold uppercase tracking-[.18em]">Aplicar filtros</button>
           </div>
         </div>
         <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
@@ -328,15 +488,15 @@ select, input {
           <div id="closureStatusArea" class="space-y-3"></div>
         </div>
         <div class="xl:col-span-8 glass rounded-[28px] p-5">
-          <div class="flex items-center justify-between gap-2 mb-4 flex-wrap"><div><p class="kpi-title">Snapshot del periodo</p><h2 class="text-xl font-extrabold">Tarjeta → Persona → Monto</h2></div><button onclick="recalculateSelectedClosure()" class="btn rounded-2xl bg-slate-900 text-white px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em]">Recalcular cierre</button></div>
+          <div class="flex items-center justify-between gap-2 mb-4 flex-wrap"><div><p class="kpi-title">Snapshot del periodo</p><h2 class="text-xl font-extrabold">Tarjeta → Persona → Monto</h2></div><button onclick="recalculateSelectedClosure()" class="btn theme-btn theme-btn-dark rounded-2xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em]">Recalcular cierre</button></div>
           <div id="closureDetailArea" class="space-y-4"></div>
         </div>
       </div>
     </section>
   </div>
 
-  <div id="modalCards" class="modal-bg"><div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl max-w-5xl"><div class="flex items-start justify-between gap-3 mb-5"><div><p class="kpi-title">Catálogo</p><h3 class="text-2xl font-extrabold">Tarjetas</h3></div><button onclick="closeModal('modalCards')" class="close-btn">✕</button></div><div class="grid grid-cols-1 xl:grid-cols-12 gap-6"><div class="xl:col-span-7"><div class="space-y-3 max-h-[58vh] overflow-auto pr-1" id="cardsList"></div></div><div class="xl:col-span-5 soft rounded-[28px] p-5"><p class="kpi-title mb-1">Nueva tarjeta</p><h4 class="text-xl font-extrabold mb-4">Agregar tarjeta</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="md:col-span-2"><input id="cardName" placeholder="Nombre (ej. BBVA Azul)" /></div><div class="md:col-span-2"><input id="cardAlias" placeholder="Alias opcional" /></div></div><button onclick="addCard()" class="btn mt-4 w-full rounded-2xl bg-blue-600 text-white py-3 text-xs font-extrabold uppercase tracking-[.18em]">Agregar tarjeta</button></div></div><div class="mt-6 flex justify-end"><button onclick="saveCards()" class="btn rounded-2xl bg-slate-900 text-white px-6 py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar tarjetas</button></div></div></div>
-  <div id="modalPeople" class="modal-bg"><div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl max-w-4xl"><div class="flex items-start justify-between gap-3 mb-5"><div><p class="kpi-title">Catálogo</p><h3 class="text-2xl font-extrabold">Personas a cobrar</h3></div><button onclick="closeModal('modalPeople')" class="close-btn">✕</button></div><div class="grid grid-cols-1 xl:grid-cols-12 gap-6"><div class="xl:col-span-7"><div class="space-y-3 max-h-[58vh] overflow-auto pr-1" id="peopleList"></div></div><div class="xl:col-span-5 soft rounded-[28px] p-5"><p class="kpi-title mb-1">Nueva persona</p><h4 class="text-xl font-extrabold mb-4">Agregar deudor / usuario</h4><input id="personName" placeholder="Ej. José, Mamá, Arturo, Sofi..." /><button onclick="addPerson()" class="btn mt-4 w-full rounded-2xl bg-blue-600 text-white py-3 text-xs font-extrabold uppercase tracking-[.18em]">Agregar persona</button><p class="text-xs text-slate-400 mt-3">Úsalo cuando prestes una tarjeta para saber exactamente a quién cobrarle en el cierre.</p></div></div><div class="mt-6 flex justify-end"><button onclick="savePeople()" class="btn rounded-2xl bg-slate-900 text-white px-6 py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar personas</button></div></div></div>
+  <div id="modalCards" class="modal-bg"><div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl max-w-5xl"><div class="flex items-start justify-between gap-3 mb-5"><div><p class="kpi-title">Catálogo</p><h3 class="text-2xl font-extrabold">Tarjetas</h3></div><button onclick="closeModal('modalCards')" class="close-btn">✕</button></div><div class="grid grid-cols-1 xl:grid-cols-12 gap-6"><div class="xl:col-span-7"><div class="space-y-3 max-h-[58vh] overflow-auto pr-1" id="cardsList"></div></div><div class="xl:col-span-5 soft rounded-[28px] p-5"><p class="kpi-title mb-1">Nueva tarjeta</p><h4 class="text-xl font-extrabold mb-4">Agregar tarjeta</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="md:col-span-2"><input id="cardName" placeholder="Nombre (ej. BBVA Azul)" /></div><div class="md:col-span-2"><input id="cardAlias" placeholder="Alias opcional" /></div></div><button onclick="addCard()" class="btn theme-btn theme-btn-primary mt-4 w-full rounded-2xl py-3 text-xs font-extrabold uppercase tracking-[.18em]">Agregar tarjeta</button></div></div><div class="mt-6 flex justify-end"><button onclick="saveCards()" class="btn theme-btn theme-btn-dark rounded-2xl px-6 py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar tarjetas</button></div></div></div>
+  <div id="modalPeople" class="modal-bg"><div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl max-w-4xl"><div class="flex items-start justify-between gap-3 mb-5"><div><p class="kpi-title">Catálogo</p><h3 class="text-2xl font-extrabold">Personas a cobrar</h3></div><button onclick="closeModal('modalPeople')" class="close-btn">✕</button></div><div class="grid grid-cols-1 xl:grid-cols-12 gap-6"><div class="xl:col-span-7"><div class="space-y-3 max-h-[58vh] overflow-auto pr-1" id="peopleList"></div></div><div class="xl:col-span-5 soft rounded-[28px] p-5"><p class="kpi-title mb-1">Nueva persona</p><h4 class="text-xl font-extrabold mb-4">Agregar deudor / usuario</h4><input id="personName" placeholder="Ej. José, Mamá, Arturo, Sofi..." /><button onclick="addPerson()" class="btn theme-btn theme-btn-primary mt-4 w-full rounded-2xl py-3 text-xs font-extrabold uppercase tracking-[.18em]">Agregar persona</button><p class="text-xs text-slate-400 mt-3">Úsalo cuando prestes una tarjeta para saber exactamente a quién cobrarle en el cierre.</p></div></div><div class="mt-6 flex justify-end"><button onclick="savePeople()" class="btn theme-btn theme-btn-dark rounded-2xl px-6 py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar personas</button></div></div></div>
 
   <div id="modalMovement" class="modal-bg">
     <div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl">
@@ -377,22 +537,22 @@ select, input {
                   <input id="movementAmount" type="number" step="0.01" min="0" placeholder="0.00" required />
                 </div>
               </div>
-                          <div>
+                          <div id="movementMonthsWrap">
               <label class="field-label field-required">Plan</label>
               <select id="movementMonths"><option value="1">Único</option><option value="3">3 MSI</option><option value="6">6 MSI</option><option value="9">9 MSI</option><option value="12">12 MSI</option><option value="18">18 MSI</option><option value="24">24 MSI</option></select>
             </div>
-                        <div>
+                        <div id="scheduleModeWrap">
                 <label class="field-label field-required">Forma de capturar MSI</label>
                 <select id="scheduleMode" onchange="toggleScheduleMode()">
                   <option value="start">Yo sé en qué mes inició</option>
                   <option value="progress">Voy en el pago X de Y</option>
                 </select>
               </div>
-              <div>
+              <div id="movementStartMonthWrap">
               <label class="field-label field-required">Mes de inicio</label>
               <select id="movementStartMonth"></select>
             </div>
-            <div>
+            <div id="movementStartYearWrap">
               <label class="field-label field-required">Año de inicio</label>
               <select id="movementStartYear"></select>
             </div>
@@ -466,7 +626,7 @@ select, input {
 
   
 
-              <button type="submit" class="btn w-full rounded-2xl bg-slate-900 text-white py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar cargo</button>
+              <button type="submit" class="btn theme-btn theme-btn-dark w-full rounded-2xl py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar cargo</button>
             </div>
           </div>
         </div>
@@ -474,7 +634,7 @@ select, input {
     </div>
   </div>
 
-  <div id="modalStatement" class="modal-bg"><div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl max-w-5xl"><div class="flex items-start justify-between gap-3 mb-6"><div><p class="kpi-title">Seguimiento documental</p><h3 class="text-2xl font-extrabold">Agregar estado de cuenta</h3></div><button onclick="closeModal('modalStatement')" class="close-btn">✕</button></div><form id="statementForm" class="grid grid-cols-1 xl:grid-cols-12 gap-6"><div class="xl:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="field-label field-required">Tarjeta</label><select id="statementCard" class="dynamic-card-select"></select></div><div><label class="field-label">Monto del estado</label><div class="input-money"><span>$</span><input id="statementTotal" type="number" step="0.01" placeholder="0.00" /></div></div><div><label class="field-label field-required">Mes del estado</label><select id="statementMonth"></select></div><div><label class="field-label field-required">Año del estado</label><select id="statementYear"></select></div><div class="md:col-span-2"><label class="field-label">Notas</label><textarea id="statementNotes" rows="6" placeholder="Observaciones del estado, referencia, anomalías, etc."></textarea></div></div><div class="xl:col-span-5 soft rounded-[28px] p-5 space-y-4"><div><p class="kpi-title mb-1">PDF</p><h4 class="text-xl font-extrabold">Guardar archivo en Firebase Storage</h4><p class="text-xs text-slate-400 mt-2">Sube el PDF o imagen del estado. Se guardará en Firebase Storage y quedará ligado al mes y tarjeta.</p></div><div><input id="statementFile" type="file" accept="application/pdf,image/*" /></div><div class="rounded-2xl warn p-4 text-sm">Si el bucket de Firebase Storage tiene reglas de escritura cerradas, la subida puede bloquearse. El código ya quedó listo para usar Storage.</div><button type="submit" class="btn w-full rounded-2xl bg-slate-900 text-white py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar estado</button></div></form></div></div>
+  <div id="modalStatement" class="modal-bg"><div class="modal-content glass rounded-[32px] p-5 md:p-7 shadow-2xl max-w-5xl"><div class="flex items-start justify-between gap-3 mb-6"><div><p class="kpi-title">Seguimiento documental</p><h3 class="text-2xl font-extrabold">Agregar estado de cuenta</h3></div><button onclick="closeModal('modalStatement')" class="close-btn">✕</button></div><form id="statementForm" class="grid grid-cols-1 xl:grid-cols-12 gap-6"><div class="xl:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="field-label field-required">Tarjeta</label><select id="statementCard" class="dynamic-card-select"></select></div><div><label class="field-label">Monto del estado</label><div class="input-money"><span>$</span><input id="statementTotal" type="number" step="0.01" placeholder="0.00" /></div></div><div><label class="field-label field-required">Mes del estado</label><select id="statementMonth"></select></div><div><label class="field-label field-required">Año del estado</label><select id="statementYear"></select></div><div class="md:col-span-2"><label class="field-label">Notas</label><textarea id="statementNotes" rows="6" placeholder="Observaciones del estado, referencia, anomalías, etc."></textarea></div></div><div class="xl:col-span-5 soft rounded-[28px] p-5 space-y-4"><div><p class="kpi-title mb-1">PDF</p><h4 class="text-xl font-extrabold">Guardar archivo en Firebase Storage</h4><p class="text-xs text-slate-400 mt-2">Sube el PDF o imagen del estado. Se guardará en Firebase Storage y quedará ligado al mes y tarjeta.</p></div><div><input id="statementFile" type="file" accept="application/pdf,image/*" /></div><div class="rounded-2xl warn p-4 text-sm">Si el bucket de Firebase Storage tiene reglas de escritura cerradas, la subida puede bloquearse. El código ya quedó listo para usar Storage.</div><button type="submit" class="btn theme-btn theme-btn-dark w-full rounded-2xl py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar estado</button></div></form></div></div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -508,12 +668,12 @@ select, input {
       applyPeriodToAll(month, year);
       renderAll();
     }
-    function prepareSelectors(){ ['monthSelectorRegistrar','movementStartMonth','statementMonth','progressReferenceMonth'].forEach(id => { const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; months.forEach((label,idx)=>sel.add(new Option(label, idx, idx===CURRENT_MONTH))); sel.value=String(CURRENT_MONTH); }); ['yearSelectorRegistrar','movementStartYear','statementYear','progressReferenceYear'].forEach(id => { const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; for(let y=2024;y<=2033;y++) sel.add(new Option(String(y), y, y===CURRENT_YEAR)); sel.value=String(CURRENT_YEAR); }); const monthRegistrar=document.getElementById('monthSelectorRegistrar'); const yearRegistrar=document.getElementById('yearSelectorRegistrar'); if(monthRegistrar) monthRegistrar.onchange=() => handlePeriodChange('registrar'); if(yearRegistrar) yearRegistrar.onchange=() => handlePeriodChange('registrar'); ['filterCard','filterPerson','filterSearch'].forEach(id => document.getElementById(id).addEventListener('input', renderAll)); ['movementAmount','progressCurrentInstallment','progressTotalInstallments','progressReferenceMonth','progressReferenceYear'].forEach(id => document.getElementById(id).addEventListener('input', updateProgressPreview)); document.getElementById('movementConcept').addEventListener('input', autoDetectInstallmentPattern); }
+    function prepareSelectors(){ ['monthSelectorRegistrar','movementStartMonth','statementMonth','progressReferenceMonth'].forEach(id => { const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; months.forEach((label,idx)=>sel.add(new Option(label, idx, idx===CURRENT_MONTH))); sel.value=String(CURRENT_MONTH); }); ['yearSelectorRegistrar','movementStartYear','statementYear','progressReferenceYear'].forEach(id => { const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; for(let y=2024;y<=2033;y++) sel.add(new Option(String(y), y, y===CURRENT_YEAR)); sel.value=String(CURRENT_YEAR); }); const monthRegistrar=document.getElementById('monthSelectorRegistrar'); const yearRegistrar=document.getElementById('yearSelectorRegistrar'); if(monthRegistrar) monthRegistrar.onchange=() => handlePeriodChange('registrar'); if(yearRegistrar) yearRegistrar.onchange=() => handlePeriodChange('registrar'); ['filterCard','filterPerson','filterSearch'].forEach(id => document.getElementById(id).addEventListener('input', renderAll)); ['movementAmount','progressCurrentInstallment','progressTotalInstallments','progressReferenceMonth','progressReferenceYear'].forEach(id => document.getElementById(id).addEventListener('input', updateProgressPreview)); document.getElementById('movementMonths').addEventListener('change', togglePlanSettings); document.getElementById('movementConcept').addEventListener('input', autoDetectInstallmentPattern); }
     function syncPeriodDefaults(){ applyPeriodToAll(CURRENT_MONTH, CURRENT_YEAR); }
     function updateCardSelects(){ const cardNames=Object.keys(workingCards); document.querySelectorAll('.dynamic-card-select').forEach(sel => { const old=sel.value; sel.innerHTML=''; cardNames.forEach(name => sel.add(new Option(name,name))); if(!cardNames.length) sel.add(new Option('SIN TARJETAS','')); if(cardNames.includes(old)) sel.value=old; }); const filter=document.getElementById('filterCard'); const current=filter.value; filter.innerHTML='<option value="all">Todas</option>' + cardNames.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join(''); if(cardNames.includes(current)) filter.value=current; }
     function updatePeopleUI(){ const ids=allPersonIds(); const singleOwner=document.getElementById('singleOwner'); const previous=singleOwner.value; singleOwner.innerHTML='<option value="">Selecciona una persona</option>' + ids.map(id => `<option value="${esc(id)}">${esc(getPersonLabel(id))}</option>`).join(''); if(previous && ids.includes(previous)) singleOwner.value=previous; else singleOwner.value=''; const filter=document.getElementById('filterPerson'); const current=filter.value; filter.innerHTML='<option value="all">Todas</option>' + ids.map(id => `<option value="${esc(id)}">${esc(getPersonLabel(id))}</option>`).join(''); if(ids.includes(current)) filter.value=current; renderSplitRows(); renderPeopleList(); }
-    function renderCardsList(){ const list=document.getElementById('cardsList'); const items=Object.entries(workingCards); list.innerHTML = items.length ? items.map(([name,cfg]) => `<div class="soft rounded-[28px] p-5"><div class="flex items-start justify-between gap-3 mb-4"><div><h4 class="text-lg font-extrabold">${esc(name)}</h4><p class="text-sm text-slate-500">Alias: ${esc(cfg.alias || name)}</p></div><button onclick="removeCard('${esc(name).replace(/'/g, "\'")}')" class="btn rounded-xl border border-rose-200 bg-rose-50 text-rose-600 px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button></div><div><label class="block text-[10px] uppercase font-extrabold tracking-[.16em] text-slate-400 mb-1">Alias</label><input id="cfg_alias_${esc(name)}" value="${esc(cfg.alias || '')}" /></div></div>`).join('') : '<div class="empty">No hay tarjetas configuradas.</div>'; }
-    function renderPeopleList(){ const list=document.getElementById('peopleList'); const items=Object.entries(workingPeople); list.innerHTML = items.length ? items.map(([id,person]) => `<div class="soft rounded-[22px] p-4 flex items-center justify-between gap-3"><div><div class="font-extrabold text-slate-800">${esc(getPersonLabel(id))}</div><div class="text-xs text-slate-400">ID interno: ${esc(id)}</div></div>${person.locked ? '<span class="badge chip">base</span>' : `<button onclick="removePerson('${esc(id)}')" class="btn rounded-xl border border-rose-200 bg-rose-50 text-rose-600 px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button>`}</div>`).join('') : '<div class="empty">No hay personas configuradas.</div>'; }
+    function renderCardsList(){ const list=document.getElementById('cardsList'); const items=Object.entries(workingCards); list.innerHTML = items.length ? items.map(([name,cfg]) => `<div class="soft rounded-[28px] p-5"><div class="flex items-start justify-between gap-3 mb-4"><div><h4 class="text-lg font-extrabold">${esc(name)}</h4><p class="text-sm text-slate-500">Alias: ${esc(cfg.alias || name)}</p></div><button onclick="removeCard('${esc(name).replace(/'/g, "\'")}')" class="btn theme-btn-danger-soft rounded-xl px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button></div><div><label class="block text-[10px] uppercase font-extrabold tracking-[.16em] text-slate-400 mb-1">Alias</label><input id="cfg_alias_${esc(name)}" value="${esc(cfg.alias || '')}" /></div></div>`).join('') : '<div class="empty">No hay tarjetas configuradas.</div>'; }
+    function renderPeopleList(){ const list=document.getElementById('peopleList'); const items=Object.entries(workingPeople); list.innerHTML = items.length ? items.map(([id,person]) => `<div class="soft rounded-[22px] p-4 flex items-center justify-between gap-3"><div><div class="font-extrabold text-slate-800">${esc(getPersonLabel(id))}</div><div class="text-xs text-slate-400">ID interno: ${esc(id)}</div></div>${person.locked ? '<span class="badge chip">base</span>' : `<button onclick="removePerson('${esc(id)}')" class="btn theme-btn-danger-soft rounded-xl px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button>`}</div>`).join('') : '<div class="empty">No hay personas configuradas.</div>'; }
     function normalizeLegacyExpense(exp){ const amount=parseAmount(exp.amount); const owner=exp.owner || 'ambos'; let splits={}; if(owner==='omi' || owner==='omar') splits={ omar: amount }; else if(owner==='vale' || owner==='valeria') splits={ valeria: amount }; else if(owner==='mama' || owner==='extra') splits={ extra: amount }; else splits={ omar: amount/2, valeria: amount/2 }; return { id:exp.id, source:'legacy', concept:exp.concept || 'Sin concepto', amount, card:exp.card || 'BANAMEX', totalMonths:Math.max(1, parseInt(exp.totalMonths || 1)), startMonth:parseInt(exp.startMonth ?? CURRENT_MONTH), startYear:parseInt(exp.startYear ?? CURRENT_YEAR), notes:exp.notes || '', splits, createdAt:exp.createdAt || dateStamp() }; }
     function normalizeModernCharge(tx){ if((tx.type || 'purchase') !== 'purchase') return null; return { id:tx.id, source:'modern', concept:tx.concept || 'Sin concepto', amount:parseAmount(tx.amount), card:tx.card || 'BANAMEX', totalMonths:Math.max(1, parseInt(tx.totalMonths || 1)), startMonth:parseInt(tx.startMonth ?? CURRENT_MONTH), startYear:parseInt(tx.startYear ?? CURRENT_YEAR), notes:tx.notes || '', splits:(tx.splits && typeof tx.splits === 'object') ? tx.splits : { omar: parseAmount(tx.amount) }, createdAt:tx.createdAt || dateStamp() }; }
     function allCharges(){ return [...legacyTransactions, ...modernTransactions].filter(Boolean).sort((a,b) => (b.createdAt || '').localeCompare(a.createdAt || '')); }
@@ -523,44 +683,40 @@ select, input {
     function computeDashboard(y,m){ const ownerTotals={}, cardSummary={}; allPersonIds().forEach(id => ownerTotals[id]=0); Object.keys(workingCards).forEach(card => cardSummary[card]={ total:0, people:{}, activePurchases:0, aliveBalance:0 }); let monthTotal=0, activeContracts=0, remainingMsi=0; allCharges().forEach(tx => { const impact=chargeImpactForMonth(tx,y,m); if(!impact.active) return; monthTotal += impact.monthlyAmount; activeContracts += 1; remainingMsi += remainingFromMonth(tx,y,m); if(!cardSummary[tx.card]) cardSummary[tx.card]={ total:0, people:{}, activePurchases:0, aliveBalance:0 }; cardSummary[tx.card].total += impact.monthlyAmount; cardSummary[tx.card].activePurchases += 1; cardSummary[tx.card].aliveBalance += remainingFromMonth(tx,y,m); const split=splitImpactForMonth(tx,y,m); Object.keys(split).forEach(id => { ownerTotals[id] = (ownerTotals[id] || 0) + split[id]; cardSummary[tx.card].people[id] = (cardSummary[tx.card].people[id] || 0) + split[id]; }); }); return { ownerTotals, cardSummary, monthTotal, activeContracts, remainingMsi }; }
     function simplifyPositiveMap(obj){ const out={}; Object.keys(obj || {}).forEach(k => { const val=Math.round((parseAmount(obj[k]) + Number.EPSILON) * 100) / 100; if(val > 0.009) out[k] = val; }); return out; }
     function buildClosureSnapshot(y,m){ const data=computeDashboard(y,m); const byCard={}; Object.keys(data.cardSummary || {}).forEach(card => { const item=data.cardSummary[card]; if((item.total || 0) <= 0.009 && (!item.people || !Object.keys(item.people).length)) return; byCard[card]={ total:Math.round(item.total*100)/100, aliveBalance:Math.round(item.aliveBalance*100)/100, activePurchases:item.activePurchases, byPerson:simplifyPositiveMap(item.people || {}) }; }); const byPerson=simplifyPositiveMap(data.ownerTotals || {}); const base={ year:y, month:m, periodKey:periodKey(y,m), total:Math.round(data.monthTotal*100)/100, remainingMsi:Math.round(data.remainingMsi*100)/100, activeContracts:data.activeContracts, byPerson, byCard }; return { ...base, contentHash:JSON.stringify(base), updatedAt:dateStamp(), mode:'auto' }; }
+    function hashSeed(value=''){ return Array.from(String(value || '')).reduce((acc, ch) => ((acc * 31) + ch.charCodeAt(0)) >>> 0, 7); }
+    function buildAutoTheme(seed='', hueOffset=0){ const hue=(hashSeed(seed) + hueOffset) % 360; return { solid:`hsl(${hue} 72% 46%)`, soft:`hsl(${hue} 85% 96%)`, border:`hsl(${hue} 70% 82%)`, text:`hsl(${hue} 62% 28%)`, gradient:`linear-gradient(135deg, hsl(${hue} 78% 56%) 0%, hsl(${(hue + 32) % 360} 70% 42%) 100%)`, shadow:`hsla(${hue}, 78%, 42%, .22)` }; }
+    function getCardTheme(name=''){ const raw=String(name || '').toUpperCase(); if(raw.includes('BANAMEX') || raw.includes('CITIBANAMEX')) return { solid:'var(--bank-banamex-start)', soft:'var(--bank-banamex-soft)', border:'var(--bank-banamex-border)', text:'var(--bank-banamex-text)', gradient:'linear-gradient(135deg, var(--bank-banamex-start) 0%, var(--bank-banamex-end) 100%)', shadow:'rgba(0,70,145,.24)' }; if(raw.includes('SANTANDER')) return { solid:'var(--bank-santander-start)', soft:'var(--bank-santander-soft)', border:'var(--bank-santander-border)', text:'var(--bank-santander-text)', gradient:'linear-gradient(135deg, var(--bank-santander-start) 0%, var(--bank-santander-end) 100%)', shadow:'rgba(236,0,0,.22)' }; if(raw.includes('BBVA') || raw.includes('BANCOMER')) return { solid:'var(--bank-bbva-start)', soft:'var(--bank-bbva-soft)', border:'var(--bank-bbva-border)', text:'var(--bank-bbva-text)', gradient:'linear-gradient(135deg, var(--bank-bbva-start) 0%, var(--bank-bbva-end) 100%)', shadow:'rgba(0,68,129,.22)' }; if(raw.includes('AMEX')) return { solid:'var(--bank-amex-start)', soft:'var(--bank-amex-soft)', border:'var(--bank-amex-border)', text:'var(--bank-amex-text)', gradient:'linear-gradient(135deg, var(--bank-amex-start) 0%, var(--bank-amex-end) 100%)', shadow:'rgba(0,112,213,.22)' }; if(raw.includes('NU')) return { solid:'var(--bank-nu-start)', soft:'var(--bank-nu-soft)', border:'var(--bank-nu-border)', text:'var(--bank-nu-text)', gradient:'linear-gradient(135deg, var(--bank-nu-start) 0%, var(--bank-nu-end) 100%)', shadow:'rgba(130,10,209,.22)' }; return buildAutoTheme(`card-${raw}`, 14); }
+    function getPersonTheme(id=''){ const raw=String(id || '').toLowerCase(); if(['omar','omi'].includes(raw)) return { solid:'#0f172a', soft:'#f8fafc', border:'#cbd5e1', text:'#0f172a', gradient:'linear-gradient(135deg, #0f172a 0%, #334155 100%)', shadow:'rgba(15,23,42,.18)' }; if(['valeria','vale'].includes(raw)) return { solid:'#e11d48', soft:'#fff1f2', border:'#fecdd3', text:'#9f1239', gradient:'linear-gradient(135deg, #fb7185 0%, #e11d48 100%)', shadow:'rgba(225,29,72,.18)' }; return buildAutoTheme(`person-${raw}`, 220); }
+    function chipStyle(theme){ return `--chip-bg:${theme.soft}; --chip-text:${theme.text}; --chip-border:${theme.border}; --chip-dot:${theme.solid};`; }
+    function chipHtml(label, theme){ return `<span class="auto-chip" style="${chipStyle(theme)}"><span class="auto-chip-dot"></span>${esc(label)}</span>`; }
+    function themedKpiCard(title, value, theme){ return `<div class="glass rounded-[26px] p-5 border-b-4" style="border-bottom-color:${theme.solid}; background:${theme.soft}; box-shadow:0 14px 30px ${theme.shadow};"><p class="kpi-title" style="color:${theme.text};">${esc(title)}</p><h3 class="text-3xl font-extrabold tracking-tight mt-2" style="color:${theme.text};">${esc(value)}</h3></div>`; }
+    function togglePlanSettings(){ const totalMonths=parseInt(document.getElementById('movementMonths')?.value || '1'); const isSingle=totalMonths <= 1; const scheduleModeWrap=document.getElementById('scheduleModeWrap'); const startMonthWrap=document.getElementById('movementStartMonthWrap'); const startYearWrap=document.getElementById('movementStartYearWrap'); const progressWrap=document.getElementById('scheduleProgressWrap'); if(scheduleModeWrap) scheduleModeWrap.classList.toggle('hidden', isSingle); if(isSingle && document.getElementById('scheduleMode')) document.getElementById('scheduleMode').value='start'; const useProgress=!isSingle && document.getElementById('scheduleMode')?.value === 'progress'; if(startMonthWrap) startMonthWrap.classList.toggle('hidden', isSingle || useProgress); if(startYearWrap) startYearWrap.classList.toggle('hidden', isSingle || useProgress); if(progressWrap) progressWrap.classList.toggle('hidden', !useProgress); updateProgressPreview(); }
     async function saveClosureSnapshot(y,m,force=false){ if(!isPastMonth(y,m) && !force) return; if(closureSaveBusy) return; closureSaveBusy=true; try { const snapshot=buildClosureSnapshot(y,m); const key=snapshot.periodKey; const current=monthlyClosures[key]; if(!force && current?.contentHash === snapshot.contentHash) return; await set(dbRef(db, `monthlyClosures/${key}`), snapshot); } catch(err){ console.warn('No se pudo guardar cierre automático', err); } finally { closureSaveBusy=false; } }
     async function autoSavePreviousMonthClosure(){ const prev=new Date(CURRENT_YEAR, CURRENT_MONTH, 1); prev.setMonth(prev.getMonth()-1); await saveClosureSnapshot(prev.getFullYear(), prev.getMonth()); }
     function renderKpis(data){
+      const periodTheme = { solid:'#2563eb', soft:'#eff6ff', border:'#bfdbfe', text:'#1d4ed8', gradient:'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)', shadow:'rgba(37,99,235,.18)' };
       const omi = data.ownerTotals.omar || data.ownerTotals.omi || 0;
       const val = data.ownerTotals.valeria || data.ownerTotals.vale || 0;
-      const extraPalette = [
-        'border-emerald-500 bg-emerald-50',
-        'border-amber-500 bg-amber-50',
-        'border-violet-500 bg-violet-50',
-        'border-cyan-500 bg-cyan-50',
-        'border-fuchsia-500 bg-fuchsia-50',
-        'border-lime-500 bg-lime-50'
-      ];
-      const baseCards = [
-        { title:'Deuda del periodo', value:fmt(data.monthTotal), color:'border-blue-500 bg-blue-50' },
-        { title:'Cuánto debe Omi', value:fmt(omi), color:'border-slate-900 bg-white' },
-        { title:'Cuánto debe Val', value:fmt(val), color:'border-rose-500 bg-rose-50' }
-      ];
       const extraCards = allPersonIds()
         .filter(id => !['omar','omi','valeria','vale'].includes(id))
         .filter(id => (data.ownerTotals[id] || 0) > 0.009)
         .sort((a,b) => (data.ownerTotals[b] || 0) - (data.ownerTotals[a] || 0))
-        .map((id, idx) => ({
-          title:`Cuánto debe ${getPersonLabel(id)}`,
-          value:fmt(data.ownerTotals[id] || 0),
-          color: extraPalette[idx % extraPalette.length]
-        }));
-      const cardsToRender = [...baseCards, ...extraCards];
-      document.getElementById('kpiArea').innerHTML = cardsToRender.map(item => `<div class="glass rounded-[26px] p-5 border-b-4 ${item.color}"><p class="kpi-title">${item.title}</p><h3 class="text-3xl font-extrabold tracking-tight mt-2">${esc(item.value)}</h3></div>`).join('');
+        .map(id => themedKpiCard(`Cuánto debe ${getPersonLabel(id)}`, fmt(data.ownerTotals[id] || 0), getPersonTheme(id)));
+      const baseCards = [
+        themedKpiCard('Deuda del periodo', fmt(data.monthTotal), periodTheme),
+        themedKpiCard('Cuánto debe Omi', fmt(omi), getPersonTheme('omar')),
+        themedKpiCard('Cuánto debe Val', fmt(val), getPersonTheme('valeria'))
+      ];
+      document.getElementById('kpiArea').innerHTML = [...baseCards, ...extraCards].join('');
     }
-    function renderOwnerBalance(data){ const ids=allPersonIds().filter(id => !['omar','valeria','omi','vale'].includes(id) && (data.ownerTotals[id] || 0) > 0.009).sort((a,b) => (data.ownerTotals[b] || 0) - (data.ownerTotals[a] || 0)); const area=document.getElementById('ownerBalanceArea'); area.innerHTML = ids.length ? ids.map(id => `<div class="soft rounded-[22px] p-4 border border-slate-200"><div class="flex items-center justify-between gap-3"><div><div class="kpi-title">Persona extra</div><div class="text-lg font-extrabold text-slate-800">${esc(getPersonLabel(id))}</div></div><div class="text-2xl font-extrabold">${fmt(data.ownerTotals[id])}</div></div></div>`).join('') : '<div class="empty">Aún no hay personas extra con deuda en este periodo.</div>'; }
-    function renderCardSummary(data){ const area=document.getElementById('cardSummaryArea'); const cardsToShow=Object.keys(workingCards).length ? Object.keys(workingCards) : Object.keys(data.cardSummary || {}); if(!cardsToShow.length){ area.innerHTML='<div class="empty col-span-full">Agrega tarjetas para comenzar.</div>'; return; } area.innerHTML=cardsToShow.map(name => { const summary=data.cardSummary[name] || { total:0, people:{}, activePurchases:0, aliveBalance:0 }; const peopleRows=Object.keys(summary.people || {}).sort((a,b) => (summary.people[b] || 0) - (summary.people[a] || 0)); const bankClass=bankClassMap[name] || 'bg-default-card'; return `<div class="glass rounded-[28px] overflow-hidden border border-white"><div class="${bankClass} text-white px-5 py-5"><div class="flex items-start justify-between gap-3"><div><p class="text-[10px] font-extrabold uppercase tracking-[.18em] text-white/60">${esc(workingCards[name]?.alias || 'Tarjeta')}</p><h3 class="text-2xl font-extrabold tracking-tight">${esc(name)}</h3><p class="text-sm text-white/75 mt-1">Total del mes ${fmt(summary.total)}</p></div><span class="badge bg-white/15 text-white">${summary.activePurchases} cargo(s)</span></div></div><div class="p-5 bg-white/92 space-y-3"><div class="flex items-center justify-between text-sm text-slate-500"><span>Saldo vivo</span><strong>${fmt(summary.aliveBalance)}</strong></div><div class="space-y-2">${peopleRows.length ? peopleRows.map(id => `<div class="flex items-center justify-between text-sm border-b border-slate-100 pb-2"><span>${esc(getPersonLabel(id))}</span><strong>${fmt(summary.people[id])}</strong></div>`).join('') : '<div class="text-sm text-slate-400 italic">Sin deuda asignada este mes.</div>'}</div></div></div>`; }).join(''); }
+    function renderOwnerBalance(data){ const area=document.getElementById('ownerBalanceArea'); if(!area) return; const ids=allPersonIds().filter(id => !['omar','valeria','omi','vale'].includes(id) && (data.ownerTotals[id] || 0) > 0.009).sort((a,b) => (data.ownerTotals[b] || 0) - (data.ownerTotals[a] || 0)); area.innerHTML = ids.length ? ids.map(id => { const theme=getPersonTheme(id); return `<div class="soft rounded-[22px] p-4 border" style="border-color:${theme.border}; background:${theme.soft};"><div class="flex items-center justify-between gap-3"><div><div class="kpi-title" style="color:${theme.text};">Persona extra</div><div class="text-lg font-extrabold text-slate-800">${chipHtml(getPersonLabel(id), theme)}</div></div><div class="text-2xl font-extrabold" style="color:${theme.text};">${fmt(data.ownerTotals[id])}</div></div></div>`; }).join('') : '<div class="empty">Aún no hay personas extra con deuda en este periodo.</div>'; }
+    function renderCardSummary(data){ const area=document.getElementById('cardSummaryArea'); const cardsToShow=Object.keys(workingCards).length ? Object.keys(workingCards) : Object.keys(data.cardSummary || {}); if(!cardsToShow.length){ area.innerHTML='<div class="empty col-span-full">Agrega tarjetas para comenzar.</div>'; return; } area.innerHTML=cardsToShow.map(name => { const summary=data.cardSummary[name] || { total:0, people:{}, activePurchases:0, aliveBalance:0 }; const peopleRows=Object.keys(summary.people || {}).sort((a,b) => (summary.people[b] || 0) - (summary.people[a] || 0)); const cardTheme=getCardTheme(name); return `<div class="glass rounded-[28px] overflow-hidden border border-white"><div style="background:${cardTheme.gradient}; box-shadow:inset 0 -1px 0 rgba(255,255,255,.12);" class="text-white px-5 py-5"><div class="flex items-start justify-between gap-3"><div><p class="text-[10px] font-extrabold uppercase tracking-[.18em] text-white/60">${esc(workingCards[name]?.alias || 'Tarjeta')}</p><h3 class="text-2xl font-extrabold tracking-tight">${esc(name)}</h3><p class="text-sm text-white/75 mt-1">Total del mes ${fmt(summary.total)}</p></div><span class="badge bg-white/15 text-white">${summary.activePurchases} cargo(s)</span></div></div><div class="p-5 bg-white/92 space-y-3"><div class="flex items-center justify-between text-sm" style="color:${cardTheme.text};"><span>Saldo vivo</span><strong>${fmt(summary.aliveBalance)}</strong></div><div class="space-y-2">${peopleRows.length ? peopleRows.map(id => { const personTheme=getPersonTheme(id); return `<div class="auto-data-row"><span>${chipHtml(getPersonLabel(id), personTheme)}</span><strong style="color:${personTheme.text};">${fmt(summary.people[id])}</strong></div>`; }).join('') : `<div class="text-sm italic" style="color:${cardTheme.text}; opacity:.75;">Sin deuda asignada este mes.</div>`}</div></div></div>`; }).join(''); }
     function filterChargesForMonth(charges,y,m){ const cardFilter=document.getElementById('filterCard').value, personFilter=document.getElementById('filterPerson').value, q=document.getElementById('filterSearch').value.trim().toLowerCase(); return charges.filter(tx => { const impact=chargeImpactForMonth(tx,y,m); if(!impact.active) return false; if(cardFilter !== 'all' && tx.card !== cardFilter) return false; if(personFilter !== 'all'){ const split=splitImpactForMonth(tx,y,m); if(!(split[personFilter] > 0)) return false; } if(q){ const hay=`${tx.concept} ${tx.notes || ''} ${tx.card}`.toLowerCase(); if(!hay.includes(q)) return false; } return true; }); }
-    function renderMovementsTable(){ const y=getSelectedYear(), m=getSelectedMonth(); const list=filterChargesForMonth(allCharges(), y, m); document.getElementById('movementCounter').innerText=`${list.length} registro(s)`; const body=document.getElementById('movementsTableBody'); body.innerHTML=list.length ? list.map(tx => { const impact=chargeImpactForMonth(tx,y,m), split=splitImpactForMonth(tx,y,m), splitRows=Object.keys(split).map(id => `<div>${esc(getPersonLabel(id))} ${fmt(split[id])}</div>`).join(''); return `<tr class="border-b border-slate-200 hover:bg-white/70"><td class="px-4 py-4"><div class="font-extrabold text-slate-800">${esc(tx.concept)}</div><div class="text-xs text-slate-400 mt-1 line-clamp-2">${esc(tx.notes || 'Sin notas')}</div></td><td class="px-4 py-4"><span class="badge chip">${esc(tx.card)}</span></td><td class="px-4 py-4"><div class="font-extrabold">${fmt(impact.monthlyAmount)}</div><div class="text-xs text-slate-400">Total ${fmt(tx.amount)}</div></td><td class="px-4 py-4 text-xs text-slate-500">${splitRows}</td><td class="px-4 py-4 text-sm text-slate-600">${toMonthLabel(tx.startYear, tx.startMonth)}</td><td class="px-4 py-4"><div class="font-semibold text-slate-700">${impact.label}</div><div class="text-xs text-slate-400">Saldo vivo ${fmt(remainingFromMonth(tx,y,m))}</div></td><td class="px-4 py-4 text-right"><div class="flex justify-end gap-3"><button onclick="editCharge('${tx.id}','${tx.source}')" class="text-blue-600 font-extrabold">Editar</button><button onclick="deleteCharge('${tx.id}','${tx.source}')" class="text-rose-500 font-extrabold">Eliminar</button></div></td></tr>`; }).join('') : '<tr><td colspan="7" class="empty">No hay cargos para este periodo con los filtros actuales.</td></tr>'; }
-    function renderStatesTable(){ const y=getSelectedYear(), m=getSelectedMonth(); const sorted=[...statements].sort((a,b) => `${b.year}${String(b.month).padStart(2,'0')}${b.card}`.localeCompare(`${a.year}${String(a.month).padStart(2,'0')}${a.card}`)); const body=document.getElementById('statesTableBody'); body.innerHTML=sorted.length ? sorted.map(st => `<tr class="border-b border-slate-200 hover:bg-white/70"><td class="px-4 py-4"><strong>${toMonthLabel(st.year, st.month)}</strong></td><td class="px-4 py-4"><span class="badge chip">${esc(st.card)}</span></td><td class="px-4 py-4">${fmt(st.total)}</td><td class="px-4 py-4">${st.fileUrl ? `<a href="${esc(st.fileUrl)}" target="_blank" class="text-blue-600 font-semibold">Abrir PDF</a>` : '<span class="text-slate-400">Sin archivo</span>'}</td><td class="px-4 py-4 text-sm text-slate-500">${esc(st.notes || '—')}</td><td class="px-4 py-4 text-right"><button onclick="deleteStatement('${st.id}')" class="text-rose-500 font-extrabold">Eliminar</button></td></tr>`).join('') : '<tr><td colspan="6" class="empty">Todavía no hay estados de cuenta guardados.</td></tr>'; const selected=sorted.filter(st => st.year===y && st.month===m); document.getElementById('statementHighlight').innerHTML=selected.length ? selected.map(st => `<div class="soft rounded-[22px] p-4 border border-slate-200"><div class="flex items-start justify-between gap-3"><div><h4 class="text-lg font-extrabold">${esc(st.card)}</h4><p class="text-sm text-slate-500">${toMonthLabel(st.year, st.month)}</p></div><span class="badge chip">${fmt(st.total)}</span></div><div class="mt-3 text-sm text-slate-600">${st.fileUrl ? `<a href="${esc(st.fileUrl)}" target="_blank" class="text-blue-600 font-semibold">Abrir archivo</a>` : 'Sin archivo'}</div>${st.notes ? `<p class="text-xs text-slate-400 mt-3 border-t border-slate-200 pt-3">${esc(st.notes)}</p>` : ''}</div>`).join('') : '<div class="empty">No hay estados guardados para este periodo.</div>'; }
+    function renderMovementsTable(){ const y=getSelectedYear(), m=getSelectedMonth(); const list=filterChargesForMonth(allCharges(), y, m); document.getElementById('movementCounter').innerText=`${list.length} registro(s)`; const body=document.getElementById('movementsTableBody'); body.innerHTML=list.length ? list.map(tx => { const impact=chargeImpactForMonth(tx,y,m), split=splitImpactForMonth(tx,y,m); const splitRows=Object.keys(split).map(id => { const personTheme=getPersonTheme(id); return `<div class="flex items-center justify-between gap-2 py-1"><span>${chipHtml(getPersonLabel(id), personTheme)}</span><strong style="color:${personTheme.text};">${fmt(split[id])}</strong></div>`; }).join(''); const cardTheme=getCardTheme(tx.card); return `<tr class="border-b border-slate-200 hover:bg-white/70"><td class="px-4 py-4"><div class="font-extrabold text-slate-800">${esc(tx.concept)}</div><div class="text-xs text-slate-400 mt-1 line-clamp-2">${esc(tx.notes || 'Sin notas')}</div></td><td class="px-4 py-4">${chipHtml(tx.card, cardTheme)}</td><td class="px-4 py-4"><div class="font-extrabold">${fmt(impact.monthlyAmount)}</div><div class="text-xs text-slate-400">Total ${fmt(tx.amount)}</div></td><td class="px-4 py-4 text-xs text-slate-500"><div class="min-w-[180px]">${splitRows}</div></td><td class="px-4 py-4 text-sm text-slate-600">${toMonthLabel(tx.startYear, tx.startMonth)}</td><td class="px-4 py-4"><div class="font-semibold text-slate-700">${impact.label}</div><div class="text-xs text-slate-400">Saldo vivo ${fmt(remainingFromMonth(tx,y,m))}</div></td><td class="px-4 py-4 text-right"><div class="flex justify-end gap-3"><button onclick="editCharge('${tx.id}','${tx.source}')" class="text-blue-600 font-extrabold">Editar</button><button onclick="deleteCharge('${tx.id}','${tx.source}')" class="text-rose-500 font-extrabold">Eliminar</button></div></td></tr>`; }).join('') : '<tr><td colspan="7" class="empty">No hay cargos para este periodo con los filtros actuales.</td></tr>'; }
+    function renderStatesTable(){ const y=getSelectedYear(), m=getSelectedMonth(); const sorted=[...statements].sort((a,b) => `${b.year}${String(b.month).padStart(2,'0')}${b.card}`.localeCompare(`${a.year}${String(a.month).padStart(2,'0')}${a.card}`)); const body=document.getElementById('statesTableBody'); body.innerHTML=sorted.length ? sorted.map(st => { const cardTheme=getCardTheme(st.card); return `<tr class="border-b border-slate-200 hover:bg-white/70"><td class="px-4 py-4"><strong>${toMonthLabel(st.year, st.month)}</strong></td><td class="px-4 py-4">${chipHtml(st.card, cardTheme)}</td><td class="px-4 py-4">${fmt(st.total)}</td><td class="px-4 py-4">${st.fileUrl ? `<a href="${esc(st.fileUrl)}" target="_blank" class="text-blue-600 font-semibold">Abrir PDF</a>` : '<span class="text-slate-400">Sin archivo</span>'}</td><td class="px-4 py-4 text-sm text-slate-500">${esc(st.notes || '—')}</td><td class="px-4 py-4 text-right"><button onclick="deleteStatement('${st.id}')" class="text-rose-500 font-extrabold">Eliminar</button></td></tr>`; }).join('') : '<tr><td colspan="6" class="empty">Todavía no hay estados de cuenta guardados.</td></tr>'; const selected=sorted.filter(st => st.year===y && st.month===m); document.getElementById('statementHighlight').innerHTML=selected.length ? selected.map(st => { const cardTheme=getCardTheme(st.card); return `<div class="soft rounded-[22px] p-4 border" style="border-color:${cardTheme.border}; background:${cardTheme.soft};"><div class="flex items-start justify-between gap-3"><div><h4 class="text-lg font-extrabold">${chipHtml(st.card, cardTheme)}</h4><p class="text-sm mt-2" style="color:${cardTheme.text};">${toMonthLabel(st.year, st.month)}</p></div><span class="badge" style="background:${cardTheme.gradient}; color:white;">${fmt(st.total)}</span></div><div class="mt-3 text-sm text-slate-600">${st.fileUrl ? `<a href="${esc(st.fileUrl)}" target="_blank" class="text-blue-600 font-semibold">Abrir archivo</a>` : 'Sin archivo'}</div>${st.notes ? `<p class="text-xs mt-3 pt-3 border-t" style="color:${cardTheme.text}; border-color:${cardTheme.border};">${esc(st.notes)}</p>` : ''}</div>`; }).join('') : '<div class="empty">No hay estados guardados para este periodo.</div>'; }
     function projectionForNextMonths(baseY, baseM, count=6){ const labels=[], totals=[], details=[]; for(let offset=0; offset<count; offset++){ const date=new Date(baseY, baseM+offset, 1), y=date.getFullYear(), m=date.getMonth(); let total=0; const byCard={}, byPerson={}; allCharges().forEach(tx => { const impact=chargeImpactForMonth(tx,y,m); if(!impact.active) return; total += impact.monthlyAmount; byCard[tx.card] = (byCard[tx.card] || 0) + impact.monthlyAmount; const split=splitImpactForMonth(tx,y,m); Object.keys(split).forEach(id => byPerson[id] = (byPerson[id] || 0) + split[id]); }); labels.push(toMonthLabel(y,m)); totals.push(total); details.push({ label:toMonthLabel(y,m), total, byCard, byPerson }); } return { labels, totals, details }; }
-    function renderProjection(){ const proj=projectionForNextMonths(getSelectedYear(), getSelectedMonth(), 6); if(projectionChart) projectionChart.destroy(); projectionChart=new Chart(document.getElementById('projectionChart').getContext('2d'), { type:'bar', data:{ labels:proj.labels, datasets:[{ label:'Deuda proyectada', data:proj.totals, backgroundColor:'#2563eb' }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } } } }); document.getElementById('projectionDetail').innerHTML=proj.details.map(item => `<div class="soft rounded-[22px] p-4 border border-slate-200"><div class="flex items-center justify-between gap-2 mb-2"><strong>${esc(item.label)}</strong><strong>${fmt(item.total)}</strong></div><div class="space-y-1 text-sm text-slate-600 mb-3">${Object.keys(item.byCard).length ? Object.entries(item.byCard).map(([card,val]) => `<div class="flex items-center justify-between"><span>${esc(card)}</span><span>${fmt(val)}</span></div>`).join('') : '<span class="text-slate-400 italic">Sin deuda proyectada.</span>'}</div><div class="pt-3 border-t border-slate-200 text-xs text-slate-500 space-y-1">${Object.keys(item.byPerson).length ? Object.entries(item.byPerson).map(([id,val]) => `<div class="flex items-center justify-between"><span>${esc(getPersonLabel(id))}</span><strong>${fmt(val)}</strong></div>`).join('') : '<span class="text-slate-400 italic">Sin personas con cargo.</span>'}</div></div>`).join(''); }
-    function renderClosureSection(){ const y=getSelectedYear(), m=getSelectedMonth(); const key=periodKey(y,m), saved=monthlyClosures[key], generated=buildClosureSnapshot(y,m), closure=saved || generated, isPast=isPastMonth(y,m); document.getElementById('closureStatusArea').innerHTML=`<div class="${isPast ? 'ok' : 'warn'} rounded-[22px] p-4"><div class="font-extrabold mb-1">${isPast ? 'Mes vencido: cierre automático activo' : 'Mes en curso: precierre en vivo'}</div><div class="text-sm">${isPast ? 'Este periodo se guarda automáticamente como snapshot en la base cuando la app detecta información nueva.' : 'El cierre sigue moviéndose porque todavía es un mes abierto. Puedes recalcularlo manualmente cuando quieras.'}</div></div><div class="soft rounded-[22px] p-4 border border-slate-200"><div class="kpi-title">Periodo</div><div class="text-xl font-extrabold mt-1">${toMonthLabel(y,m)}</div><div class="text-sm text-slate-500 mt-2">Clave de cierre: ${esc(key)}</div></div><div class="soft rounded-[22px] p-4 border border-slate-200"><div class="kpi-title">Última actualización</div><div class="text-lg font-extrabold mt-1">${saved?.updatedAt ? new Date(saved.updatedAt).toLocaleString('es-MX') : 'No persistido aún'}</div><div class="text-sm text-slate-500 mt-2">${saved ? 'Snapshot guardado en monthlyClosures.' : 'Vista calculada en este momento.'}</div></div><div class="soft rounded-[22px] p-4 border border-slate-200"><div class="kpi-title">Total del cierre</div><div class="text-2xl font-extrabold mt-1">${fmt(closure.total)}</div><div class="text-sm text-slate-500 mt-2">MSI vivo posterior: ${fmt(closure.remainingMsi || 0)}</div></div>`; const byCard=closure.byCard || {}; const cards=Object.keys(byCard).sort((a,b) => (byCard[b]?.total || 0) - (byCard[a]?.total || 0)); document.getElementById('closureDetailArea').innerHTML=cards.length ? cards.map(card => { const item=byCard[card]; const byPerson=Object.keys(item.byPerson || {}).sort((a,b) => (item.byPerson[b] || 0) - (item.byPerson[a] || 0)); return `<div class="soft rounded-[24px] p-5 border border-slate-200"><div class="flex items-start justify-between gap-3 mb-4"><div><div class="kpi-title">Tarjeta</div><h3 class="text-xl font-extrabold">${esc(card)}</h3></div><div class="text-right"><div class="kpi-title">Total</div><div class="text-2xl font-extrabold">${fmt(item.total)}</div></div></div><div class="space-y-2">${byPerson.length ? byPerson.map(id => `<div class="flex items-center justify-between border-b border-slate-100 pb-2 text-sm"><span>${esc(getPersonLabel(id))}</span><strong>${fmt(item.byPerson[id])}</strong></div>`).join('') : '<div class="text-sm text-slate-400 italic">Sin personas asignadas.</div>'}</div></div>`; }).join('') : '<div class="empty">No hay información de cierre para este periodo.</div>'; }
+    function renderProjection(){ const proj=projectionForNextMonths(getSelectedYear(), getSelectedMonth(), 6); if(projectionChart) projectionChart.destroy(); projectionChart=new Chart(document.getElementById('projectionChart').getContext('2d'), { type:'bar', data:{ labels:proj.labels, datasets:[{ label:'Deuda proyectada', data:proj.totals, backgroundColor:'#2563eb' }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } } } }); document.getElementById('projectionDetail').innerHTML=proj.details.map(item => `<div class="soft rounded-[22px] p-4 border border-slate-200"><div class="flex items-center justify-between gap-2 mb-2"><strong>${esc(item.label)}</strong><strong>${fmt(item.total)}</strong></div><div class="space-y-2 text-sm text-slate-600 mb-3">${Object.keys(item.byCard).length ? Object.entries(item.byCard).map(([card,val]) => { const cardTheme=getCardTheme(card); return `<div class="auto-data-row"><span>${chipHtml(card, cardTheme)}</span><span style="color:${cardTheme.text}; font-weight:800;">${fmt(val)}</span></div>`; }).join('') : '<span class="text-slate-400 italic">Sin deuda proyectada.</span>'}</div><div class="pt-3 border-t border-slate-200 text-xs text-slate-500 space-y-2">${Object.keys(item.byPerson).length ? Object.entries(item.byPerson).map(([id,val]) => { const personTheme=getPersonTheme(id); return `<div class="auto-data-row"><span>${chipHtml(getPersonLabel(id), personTheme)}</span><strong style="color:${personTheme.text};">${fmt(val)}</strong></div>`; }).join('') : '<span class="text-slate-400 italic">Sin personas con cargo.</span>'}</div></div>`).join(''); }
+    function renderClosureSection(){ const y=getSelectedYear(), m=getSelectedMonth(); const key=periodKey(y,m), saved=monthlyClosures[key], generated=buildClosureSnapshot(y,m), closure=saved || generated, isPast=isPastMonth(y,m); document.getElementById('closureStatusArea').innerHTML=`<div class="${isPast ? 'ok' : 'warn'} rounded-[22px] p-4"><div class="font-extrabold mb-1">${isPast ? 'Mes vencido: cierre automático activo' : 'Mes en curso: precierre en vivo'}</div><div class="text-sm">${isPast ? 'Este periodo se guarda automáticamente como snapshot en la base cuando la app detecta información nueva.' : 'El cierre sigue moviéndose porque todavía es un mes abierto. Puedes recalcularlo manualmente cuando quieras.'}</div></div><div class="soft rounded-[22px] p-4 border border-slate-200"><div class="kpi-title">Periodo</div><div class="text-xl font-extrabold mt-1">${toMonthLabel(y,m)}</div><div class="text-sm text-slate-500 mt-2">Clave de cierre: ${esc(key)}</div></div><div class="soft rounded-[22px] p-4 border border-slate-200"><div class="kpi-title">Última actualización</div><div class="text-lg font-extrabold mt-1">${saved?.updatedAt ? new Date(saved.updatedAt).toLocaleString('es-MX') : 'No persistido aún'}</div><div class="text-sm text-slate-500 mt-2">${saved ? 'Snapshot guardado en monthlyClosures.' : 'Vista calculada en este momento.'}</div></div><div class="soft rounded-[22px] p-4 border border-slate-200"><div class="kpi-title">Total del cierre</div><div class="text-2xl font-extrabold mt-1">${fmt(closure.total)}</div><div class="text-sm text-slate-500 mt-2">MSI vivo posterior: ${fmt(closure.remainingMsi || 0)}</div></div>`; const byCard=closure.byCard || {}; const cards=Object.keys(byCard).sort((a,b) => (byCard[b]?.total || 0) - (byCard[a]?.total || 0)); document.getElementById('closureDetailArea').innerHTML=cards.length ? cards.map(card => { const item=byCard[card]; const byPerson=Object.keys(item.byPerson || {}).sort((a,b) => (item.byPerson[b] || 0) - (item.byPerson[a] || 0)); const cardTheme=getCardTheme(card); return `<div class="soft rounded-[24px] p-5 border" style="border-color:${cardTheme.border}; background:${cardTheme.soft};"><div class="flex items-start justify-between gap-3 mb-4"><div><div class="kpi-title" style="color:${cardTheme.text};">Tarjeta</div><h3 class="text-xl font-extrabold mt-2">${chipHtml(card, cardTheme)}</h3></div><div class="text-right"><div class="kpi-title" style="color:${cardTheme.text};">Total</div><div class="text-2xl font-extrabold" style="color:${cardTheme.text};">${fmt(item.total)}</div></div></div><div class="space-y-2">${byPerson.length ? byPerson.map(id => { const personTheme=getPersonTheme(id); return `<div class="auto-data-row text-sm"><span>${chipHtml(getPersonLabel(id), personTheme)}</span><strong style="color:${personTheme.text};">${fmt(item.byPerson[id])}</strong></div>`; }).join('') : '<div class="text-sm text-slate-400 italic">Sin personas asignadas.</div>'}</div></div>`; }).join('') : '<div class="empty">No hay información de cierre para este periodo.</div>'; }
     function renderSplitRows(){ const holder=document.getElementById('dynamicSplitRows'); const ids=allPersonIds(); holder.innerHTML=ids.map(id => `<div><label class="field-label">${esc(getPersonLabel(id))}</label><input data-split-id="${esc(id)}" type="number" step="0.01" min="0" placeholder="0.00" /></div>`).join(''); holder.querySelectorAll('input').forEach(i => i.addEventListener('input', updateCustomSplitView)); updateCustomSplitView(); }
     function updateCustomSplitView(){ const total=parseAmount(document.getElementById('movementAmount').value); let current=0; document.querySelectorAll('[data-split-id]').forEach(i => current += parseAmount(i.value)); document.getElementById('customSplitCurrent').innerText=fmt(current); document.getElementById('customSplitTarget').innerText=fmt(total); }
     function inferStartFromProgress(refYear, refMonth, currentInstallment){ const start=new Date(refYear, refMonth - (currentInstallment-1), 1); return { year:start.getFullYear(), month:start.getMonth() }; }
@@ -587,17 +743,17 @@ select, input {
     if (typeof updateProgressPreview === 'function') {
         updateProgressPreview();
     }
-} function toggleScheduleMode(){ const progress=document.getElementById('scheduleMode').value === 'progress'; document.getElementById('scheduleStartWrap').classList.toggle('hidden', progress); document.getElementById('scheduleProgressWrap').classList.toggle('hidden', !progress); updateProgressPreview(); }
+} function toggleScheduleMode(){ const progress=document.getElementById('scheduleMode').value === 'progress'; document.getElementById('scheduleStartWrap').classList.toggle('hidden', progress); document.getElementById('scheduleProgressWrap').classList.toggle('hidden', !progress); togglePlanSettings(); updateProgressPreview(); }
     window.toggleScheduleMode = toggleScheduleMode;
     function toggleSplitMode(){ const mode=document.getElementById('splitMode').value; const custom=mode === 'custom'; const single=mode === 'single'; document.getElementById('singleOwnerWrap').classList.toggle('hidden', !single); document.getElementById('customSplitWrap').classList.toggle('hidden', !custom); updateCustomSplitView(); }
     window.toggleSplitMode = toggleSplitMode;
     function getMovementSplits(amount){ const mode=document.getElementById('splitMode').value; if(mode === 'single'){ const id=document.getElementById('singleOwner').value; if(!id) throw new Error('Selecciona obligatoriamente una persona responsable.'); return { [id]: roundMoney(amount) }; } if(mode === 'half'){ const vale=roundMoney(amount / 2); const omar=roundMoney(amount - vale); return { valeria: vale, omar: omar }; } if(mode === '7030'){ const vale=roundMoney(amount * 0.30); const omar=roundMoney(amount - vale); return { valeria: vale, omar: omar }; } const splits={}, sumObj={sum:0}; document.querySelectorAll('[data-split-id]').forEach(input => { const val=parseAmount(input.value); if(val>0){ splits[input.dataset.splitId]=val; sumObj.sum += val; } }); if(!Object.keys(splits).length) throw new Error('Captura al menos una persona en el reparto.'); if(Math.abs(sumObj.sum - amount) > 0.02) throw new Error('El reparto personalizado no suma exactamente el monto total.'); return splits; }
     function getSchedulePayload(){ const mode=document.getElementById('scheduleMode').value; if(mode === 'progress'){ const current=parseInt(document.getElementById('progressCurrentInstallment').value || '0'); const total=parseInt(document.getElementById('progressTotalInstallments').value || '0'); const refMonth=parseInt(document.getElementById('progressReferenceMonth').value); const refYear=parseInt(document.getElementById('progressReferenceYear').value); if(!current || !total || current<1 || total<1 || current>total) throw new Error('Captura correctamente el avance del MSI, por ejemplo 4 de 12.'); const start=inferStartFromProgress(refYear, refMonth, current); return { totalMonths: total, startMonth:start.month, startYear:start.year, captureMode:'progress', currentInstallment: current, referenceMonth: refMonth, referenceYear: refYear }; } return { totalMonths: Math.max(1, parseInt(document.getElementById('movementMonths').value || '1')), startMonth: parseInt(document.getElementById('movementStartMonth').value), startYear: parseInt(document.getElementById('movementStartYear').value), captureMode:'start' }; }
-    function resetChargeForm(){ document.getElementById('movementForm').reset(); document.getElementById('movementModalTitle').innerText='Nuevo cargo'; document.getElementById('editChargeId').value=''; document.getElementById('editChargeSource').value=''; document.getElementById('scheduleMode').value='start'; ['movementStartMonth','progressReferenceMonth'].forEach(id => document.getElementById(id).value=String(getSelectedMonth())); ['movementStartYear','progressReferenceYear'].forEach(id => document.getElementById(id).value=String(getSelectedYear())); document.getElementById('movementMonths').value='1'; document.getElementById('splitMode').value='single'; toggleScheduleMode(); toggleSplitMode(); document.getElementById('singleOwner').value=''; }
+    function resetChargeForm(){ document.getElementById('movementForm').reset(); document.getElementById('movementModalTitle').innerText='Nuevo cargo'; document.getElementById('editChargeId').value=''; document.getElementById('editChargeSource').value=''; document.getElementById('scheduleMode').value='start'; ['movementStartMonth','progressReferenceMonth'].forEach(id => document.getElementById(id).value=String(getSelectedMonth())); ['movementStartYear','progressReferenceYear'].forEach(id => document.getElementById(id).value=String(getSelectedYear())); document.getElementById('movementMonths').value='1'; document.getElementById('splitMode').value='single'; toggleScheduleMode(); togglePlanSettings(); toggleSplitMode(); document.getElementById('singleOwner').value=''; }
     function openChargeModal(){ resetChargeForm(); openModal('modalMovement'); }
     window.openChargeModal = openChargeModal;
     function setSingleOrCustomSplits(splits,totalAmount){ const ids=Object.keys(splits || {}).filter(id => parseAmount(splits[id]) > 0.009); const vale=parseAmount(splits?.valeria); const omar=parseAmount(splits?.omar); if(ids.length===2 && ids.includes('valeria') && ids.includes('omar') && moneyEquals(vale, totalAmount / 2) && moneyEquals(omar, totalAmount / 2)){ document.getElementById('splitMode').value='half'; toggleSplitMode(); return; } if(ids.length===2 && ids.includes('valeria') && ids.includes('omar') && moneyEquals(vale, totalAmount * 0.30) && moneyEquals(omar, totalAmount * 0.70)){ document.getElementById('splitMode').value='7030'; toggleSplitMode(); return; } if(ids.length===1 && Math.abs(parseAmount(splits[ids[0]]) - totalAmount) <= 0.02){ document.getElementById('splitMode').value='single'; toggleSplitMode(); document.getElementById('singleOwner').value=ids[0]; } else { document.getElementById('splitMode').value='custom'; toggleSplitMode(); document.querySelectorAll('[data-split-id]').forEach(input => { input.value = splits[input.dataset.splitId] ? String(splits[input.dataset.splitId]) : ''; }); updateCustomSplitView(); } }
-    function populateFormFromCharge(tx){ document.getElementById('movementConcept').value=tx.concept || ''; document.getElementById('movementAmount').value=tx.amount; document.getElementById('movementCard').value=tx.card; document.getElementById('movementNotes').value=tx.notes || ''; const currentPeriodMonth=getSelectedMonth(), currentPeriodYear=getSelectedYear(); const diff=monthDiff(tx.startYear, tx.startMonth, currentPeriodYear, currentPeriodMonth); if(tx.totalMonths > 1 && diff >= 0 && diff < tx.totalMonths){ document.getElementById('scheduleMode').value='progress'; toggleScheduleMode(); document.getElementById('progressCurrentInstallment').value=String(diff+1); document.getElementById('progressTotalInstallments').value=String(tx.totalMonths); document.getElementById('progressReferenceMonth').value=String(currentPeriodMonth); document.getElementById('progressReferenceYear').value=String(currentPeriodYear); updateProgressPreview(); } else { document.getElementById('scheduleMode').value='start'; toggleScheduleMode(); document.getElementById('movementMonths').value=String(tx.totalMonths || 1); document.getElementById('movementStartMonth').value=String(tx.startMonth); document.getElementById('movementStartYear').value=String(tx.startYear); } setSingleOrCustomSplits(tx.splits || {}, tx.amount); }
+    function populateFormFromCharge(tx){ document.getElementById('movementConcept').value=tx.concept || ''; document.getElementById('movementAmount').value=tx.amount; document.getElementById('movementCard').value=tx.card; document.getElementById('movementNotes').value=tx.notes || ''; document.getElementById('movementMonths').value=String(tx.totalMonths || 1); const currentPeriodMonth=getSelectedMonth(), currentPeriodYear=getSelectedYear(); const diff=monthDiff(tx.startYear, tx.startMonth, currentPeriodYear, currentPeriodMonth); if(tx.totalMonths > 1 && diff >= 0 && diff < tx.totalMonths){ document.getElementById('scheduleMode').value='progress'; toggleScheduleMode(); document.getElementById('progressCurrentInstallment').value=String(diff+1); document.getElementById('progressTotalInstallments').value=String(tx.totalMonths); document.getElementById('progressReferenceMonth').value=String(currentPeriodMonth); document.getElementById('progressReferenceYear').value=String(currentPeriodYear); updateProgressPreview(); } else { document.getElementById('scheduleMode').value='start'; toggleScheduleMode(); document.getElementById('movementStartMonth').value=String(tx.startMonth); document.getElementById('movementStartYear').value=String(tx.startYear); } togglePlanSettings(); setSingleOrCustomSplits(tx.splits || {}, tx.amount); }
     function editCharge(id,source){ const tx=source === 'legacy' ? legacyTransactions.find(x => x.id===id) : modernTransactions.find(x => x.id===id); if(!tx) return; resetChargeForm(); document.getElementById('movementModalTitle').innerText='Editar cargo'; document.getElementById('editChargeId').value=id; document.getElementById('editChargeSource').value=source; populateFormFromCharge(tx); openModal('modalMovement'); }
     window.editCharge = editCharge;
     function addCard(){ const name=document.getElementById('cardName').value.trim().toUpperCase(); if(!name) return Swal.fire('Falta el nombre','Indica el nombre de la tarjeta.','warning'); workingCards[name]={ alias: document.getElementById('cardAlias').value.trim() }; ['cardName','cardAlias'].forEach(id => document.getElementById(id).value=''); updateCardSelects(); renderCardsList(); }
@@ -626,10 +782,10 @@ select, input {
     function setTab(tab){ document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active','text-white')); document.getElementById(`tab-${tab}`).classList.add('tab-active','text-white'); document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden')); document.getElementById(`page-${tab}`).classList.remove('hidden'); }
     window.setTab = setTab;
     async function handleAutomaticClosures(){ const y=getSelectedYear(), m=getSelectedMonth(); await autoSavePreviousMonthClosure(); if(isPastMonth(y,m)) await saveClosureSnapshot(y,m); }
-    function renderAll(){ const y=getSelectedYear(), m=getSelectedMonth(); applyPeriodToAll(m, y); const data=computeDashboard(y,m); renderKpis(data); renderOwnerBalance(data); renderCardSummary(data); renderMovementsTable(); renderStatesTable(); renderProjection(); renderClosureSection(); handleAutomaticClosures(); }
+    function renderAll(){ const y=getSelectedYear(), m=getSelectedMonth(); applyPeriodToAll(m, y); const data=computeDashboard(y,m); renderKpis(data); renderCardSummary(data); renderMovementsTable(); renderStatesTable(); renderProjection(); renderClosureSection(); handleAutomaticClosures(); }
     window.renderAll=renderAll;
     function wireRealtime(){ onValue(dbRef(db, 'settings/cards'), snap => { cards=snap.val() || defaultCards(); workingCards=JSON.parse(JSON.stringify(cards)); updateCardSelects(); renderCardsList(); renderAll(); }); onValue(dbRef(db, 'settings/people'), snap => { people={ ...defaultPeople(), ...(snap.val() || {}) }; const basePeople=defaultPeople(); ['omar','valeria'].forEach(id => { people[id] = { ...(people[id] || {}), ...basePeople[id], locked:true }; }); workingPeople=JSON.parse(JSON.stringify(people)); updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'transactions'), snap => { const data=snap.val(); modernTransactions=data ? Object.keys(data).map(id => normalizeModernCharge({ id, ...data[id] })).filter(Boolean) : []; updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'expenses'), snap => { const data=snap.val(); legacyTransactions=data ? Object.keys(data).map(id => normalizeLegacyExpense({ id, ...data[id] })) : []; updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'statements'), snap => { const data=snap.val(); statements=data ? Object.keys(data).map(id => ({ id, ...data[id] })) : []; renderAll(); }); onValue(dbRef(db, 'monthlyClosures'), snap => { monthlyClosures=snap.val() || {}; renderClosureSection(); }); }
-    function init(){ prepareSelectors(); syncPeriodDefaults(); workingCards=defaultCards(); workingPeople=defaultPeople(); updateCardSelects(); renderCardsList(); updatePeopleUI(); toggleScheduleMode(); toggleSplitMode(); wireRealtime(); setTab('registrar'); renderAll(); }
+    function init(){ prepareSelectors(); syncPeriodDefaults(); workingCards=defaultCards(); workingPeople=defaultPeople(); updateCardSelects(); renderCardsList(); updatePeopleUI(); toggleScheduleMode(); togglePlanSettings(); toggleSplitMode(); wireRealtime(); setTab('registrar'); renderAll(); }
     init();
   </script>
 </body>
