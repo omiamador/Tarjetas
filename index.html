@@ -68,36 +68,104 @@
     .modal-title { font-size: 30px; font-weight: 800; letter-spacing: -.02em; }
     .modal-subtitle { margin-top:4px; color:#64748b; font-size:14px; }
     .close-btn { width:44px; height:44px; border-radius:18px; background:white; border:1px solid #e2e8f0; color:#94a3b8; font-size:20px; }
+    .app-shell-header { position:relative; overflow:hidden; }
+    .app-shell-header::after { content:''; position:absolute; inset:auto -120px -120px auto; width:320px; height:320px; background: radial-gradient(circle, rgba(37,99,235,.12) 0%, rgba(37,99,235,0) 70%); pointer-events:none; }
+    .brand-wrap { display:flex; align-items:center; gap:18px; }
+    .brand-logo-frame { width:72px; height:72px; border-radius:24px; background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%); display:flex; align-items:center; justify-content:center; box-shadow:0 18px 34px rgba(15,23,42,.18); overflow:hidden; flex-shrink:0; }
+    .brand-logo-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+    .brand-logo-fallback { width:100%; height:100%; display:none; align-items:center; justify-content:center; color:white; font-size:28px; font-weight:900; letter-spacing:-.04em; }
+    .brand-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.28em; font-weight:800; color:#2563eb; }
+    .brand-title { font-size:34px; line-height:1; font-weight:900; letter-spacing:-.04em; color:#0f172a; margin-top:6px; }
+    .brand-subtitle { margin-top:8px; color:#475569; font-size:15px; font-weight:600; }
+    .brand-chip { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.16em; }
+    .brand-chip-dot { width:8px; height:8px; border-radius:999px; background:#2563eb; box-shadow:0 0 0 6px rgba(37,99,235,.12); }
+    @media (max-width: 768px){ .brand-title{ font-size:28px; } .brand-wrap{ align-items:flex-start; } }
+
+/* Estilos para Pantalla Completa y Mejor Apariencia */
+body {
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    width: 100vw;
+    padding: 1rem;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Ajuste para que las pestañas se distribuyan bien */
+.tab-btn {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Ajuste de selects para que ocupen todo el ancho */
+select, input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+    
   </style>
 </head>
 <body class="pb-14">
-  <div class="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
-    <header class="mb-6">
-      <div class="glass rounded-[28px] p-5 md:p-7 flex flex-col xl:flex-row gap-5 xl:items-center xl:justify-between">
-        <div class="flex items-start gap-4">
-          <div class="w-14 h-14 rounded-3xl bg-slate-900 text-white flex items-center justify-center text-2xl font-black shadow-2xl">VO</div>
-          <div>
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">ValOmi</h1>
-          </div>
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
+<section class="mb-8">
+  <div class="glass rounded-[32px] p-6 md:p-8 flex flex-col lg:flex-row gap-6 items-center justify-between border border-white/20 shadow-xl w-full">
+    
+    <div class="flex items-center gap-5 w-full lg:w-auto">
+      <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-white-600 rounded-3xl flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-indigo-200">
+        <img src="logo.png" alt="Logo" class="h-12 w-12 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <span class="hidden" style="display: none;">VO</span>
+      </div>
+      <div>
+        <div class="text-xs font-black text-indigo-600 uppercase tracking-[0.25em] mb-1">Control Tarjetas</div>
+        <h1 class="text-3xl font-black text-slate-800">Team Valomi</h1>
+      </div>
+    </div>
+    
+    <div class="bg-slate-50 border border-slate-100 rounded-[24px] p-5 w-full lg:w-auto min-w-[320px] shadow-inner">
+      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center lg:text-left">Periodo activo seleccionado</p>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">Mes</label>
+          <select id="monthSelectorRegistrar" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"></select>
         </div>
-        <div class="flex flex-col lg:flex-row gap-3 w-full xl:w-auto">
-          <div class="glass rounded-2xl px-3 py-2 flex items-center gap-2">
-            <select id="monthSelector" class="border-none bg-transparent font-bold text-slate-700 min-w-[140px] px-2 py-2"></select>
-            <select id="yearSelector" class="border-none bg-transparent font-bold text-slate-700 min-w-[110px] px-2 py-2"></select>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <button onclick="openChargeModal()" class="btn action-btn dark"><span class="icon-chip">＋</span><span>Cargo</span></button>
-            <button onclick="openModal('modalStatement')" class="btn action-btn blue"><span class="icon-chip">📄</span><span>Estado</span></button>
-            <button onclick="openModal('modalCards')" class="btn action-btn light"><span class="icon-chip">💳</span><span>Tarjetas</span></button>
-            <button onclick="openModal('modalPeople')" class="btn action-btn light"><span class="icon-chip">👥</span><span>Personas</span></button>
-          </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 mb-1 uppercase">Año</label>
+          <select id="yearSelectorRegistrar" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"></select>
         </div>
       </div>
-    </header>
+    </div>
+
+  </div>
+</section>
 
     <section class="mb-5">
       <div class="flex flex-wrap gap-2 glass rounded-2xl p-2">
-        <button id="tab-dashboard" onclick="setTab('dashboard')" class="tab-btn tab-active rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em]">Dashboard</button>
+        <button id="tab-registrar" onclick="setTab('registrar')" class="tab-btn rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em] text-slate-500">Registrar</button>
+        <button id="tab-dashboard" onclick="setTab('dashboard')" class="tab-btn rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em] text-slate-500">Dashboard</button>
         <button id="tab-movimientos" onclick="setTab('movimientos')" class="tab-btn rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em] text-slate-500">Cargos</button>
         <button id="tab-estados" onclick="setTab('estados')" class="tab-btn rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em] text-slate-500">Estados</button>
         <button id="tab-proyeccion" onclick="setTab('proyeccion')" class="tab-btn rounded-xl px-4 py-3 text-xs font-extrabold uppercase tracking-[.18em] text-slate-500">Proyección</button>
@@ -105,19 +173,64 @@
       </div>
     </section>
 
-    <section id="page-dashboard" class="page-section space-y-6">
-      <div id="kpiArea" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-      <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
-        <div class="xl:col-span-4 glass rounded-[28px] p-5 md:p-6">
-          <div class="mb-4"><p class="kpi-title">Resumen por persona</p><h2 class="text-xl font-extrabold">Personas extras</h2></div>
-          <div id="ownerBalanceArea" class="space-y-3"></div>
+<section id="page-registrar" class="page-section hidden space-y-6">
+  <div class="glass rounded-[32px] p-8 w-full border border-white/20 shadow-xl">
+    
+    <div class="mb-8">
+      <h2 class="text-3xl font-black tracking-tight text-slate-800">Registrar</h2>
+      <p class="text-slate-500 mt-2">Gestiona tus movimientos y datos financieros.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+      
+      <button onclick="openChargeModal()" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 w-full shadow-lg shadow-indigo-200">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        <span class="font-bold text-lg uppercase tracking-wider">Cargo</span>
+      </button>
+      
+      <button onclick="openModal('modalStatement')" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-emerald-500 text-white hover:bg-emerald-600 transition-all duration-300 w-full shadow-lg shadow-emerald-200">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span class="font-bold text-lg uppercase tracking-wider">Estado</span>
+      </button>
+      
+      <button onclick="openModal('modalCards')" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-amber-500 text-white hover:bg-amber-600 transition-all duration-300 w-full shadow-lg shadow-amber-200">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+        <span class="font-bold text-lg uppercase tracking-wider">Tarjetas</span>
+      </button>
+      
+      <button onclick="openModal('modalPeople')" class="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-rose-500 text-white hover:bg-rose-600 transition-all duration-300 w-full shadow-lg shadow-rose-200">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <span class="font-bold text-lg uppercase tracking-wider">Personas</span>
+      </button>
+      
+    </div>
+  </div>
+
+  
+</section>
+<section id="page-dashboard" class="page-section space-y-6">
+  <div id="kpiArea" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"></div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <div class="xl:col-span-12 glass rounded-[28px] p-5 md:p-6">
+      <div class="flex items-center justify-between gap-2 mb-4 flex-wrap">
+        <div>
+          <h2 class="text-xl font-extrabold">DESGLOSE MENSUAL</h2>
         </div>
-        <div class="xl:col-span-8 glass rounded-[28px] p-5 md:p-6">
-          <div class="flex items-center justify-between gap-2 mb-4 flex-wrap"><div><h2 class="text-xl font-extrabold">DESGLOSE MENSUAL</h2></div><span class="text-xs text-slate-400">Esto representa lo que corresponde cobrar en el mes seleccionado.</span></div>
-          <div id="cardSummaryArea" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </div>
+        <span class="text-xs text-slate-400">Esto representa lo que corresponde cobrar en el mes seleccionado.</span>
       </div>
-    </section>
+      <div id="cardSummaryArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    </div>
+
+    <div class="xl:col-span-12 glass rounded-[28px] p-5 md:p-6">
+      <div class="mb-4">
+        <p class="kpi-title">Resumen por persona</p>
+        <h2 class="text-xl font-extrabold">Personas extras</h2>
+      </div>
+      <div id="ownerBalanceArea" class="space-y-3"></div>
+    </div>
+  </div>
+</section>
 
     <section id="page-movimientos" class="page-section hidden space-y-6">
       <div class="glass rounded-[28px] p-5 md:p-6">
@@ -231,7 +344,6 @@
         <div>
           <p class="kpi-title">Registro</p>
           <h3 id="movementModalTitle" class="modal-title">Nuevo cargo</h3>
-          <p class="modal-subtitle">Captura completa del movimiento para evitar errores y dejar claro quién debe pagarlo.</p>
         </div>
         <button onclick="closeModal('modalMovement')" class="close-btn">✕</button>
       </div>
@@ -242,20 +354,21 @@
         <div class="xl:col-span-7 space-y-4">
           <div class="soft section-card">
             <div class="mb-4">
-              <p class="section-heading">Paso 1</p>
+       
               <h4 class="text-2xl font-extrabold">Información del cargo</h4>
-              <p class="field-hint">Primero define la tarjeta, el concepto y el monto con el mayor detalle posible.</p>
+           
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
               <div>
                 <label class="field-label field-required">Tarjeta</label>
                 <select id="movementCard" class="dynamic-card-select"></select>
               </div>
               <div>
                 <label class="field-label field-required">Concepto</label>
-                <input id="movementConcept" placeholder="Ej. Costco despensa, Liverpool TV, vuelo, etc." required />
-                <p class="field-hint">Escribe un concepto claro para identificarlo rápido en el cierre.</p>
+                <input id="movementConcept" placeholder="" required />
+         
               </div>
               <div>
                 <label class="field-label field-required">Monto total</label>
@@ -264,22 +377,18 @@
                   <input id="movementAmount" type="number" step="0.01" min="0" placeholder="0.00" required />
                 </div>
               </div>
-              <div>
+                          <div>
+              <label class="field-label field-required">Plan</label>
+              <select id="movementMonths"><option value="1">Único</option><option value="3">3 MSI</option><option value="6">6 MSI</option><option value="9">9 MSI</option><option value="12">12 MSI</option><option value="18">18 MSI</option><option value="24">24 MSI</option></select>
+            </div>
+                        <div>
                 <label class="field-label field-required">Forma de capturar MSI</label>
                 <select id="scheduleMode" onchange="toggleScheduleMode()">
                   <option value="start">Yo sé en qué mes inició</option>
                   <option value="progress">Voy en el pago X de Y</option>
                 </select>
               </div>
-            </div>
-          </div>
-
-          <div id="scheduleStartWrap" class="soft section-card grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label class="field-label field-required">Plan</label>
-              <select id="movementMonths"><option value="1">Único</option><option value="3">3 MSI</option><option value="6">6 MSI</option><option value="9">9 MSI</option><option value="12">12 MSI</option><option value="18">18 MSI</option><option value="24">24 MSI</option></select>
-            </div>
-            <div>
+              <div>
               <label class="field-label field-required">Mes de inicio</label>
               <select id="movementStartMonth"></select>
             </div>
@@ -287,6 +396,12 @@
               <label class="field-label field-required">Año de inicio</label>
               <select id="movementStartYear"></select>
             </div>
+            </div>
+          </div>
+
+          <div id="scheduleStartWrap" class="soft section-card grid grid-cols-1 md:grid-cols-3 gap-4">
+
+
           </div>
 
           <div id="scheduleProgressWrap" class="hidden soft section-card space-y-4">
@@ -319,9 +434,9 @@
         <div class="xl:col-span-5">
           <div class="soft section-card h-full">
             <div class="mb-4">
-              <p class="section-heading">Paso 2</p>
+           
               <h4 class="text-2xl font-extrabold">Responsable del cargo</h4>
-              <p class="field-hint">El sistema te obligará a seleccionar una persona para evitar que se guarde por error con un responsable por default.</p>
+           
             </div>
 
             <div class="space-y-4">
@@ -329,6 +444,8 @@
                 <label class="field-label field-required">Modo de asignación</label>
                 <select id="splitMode" onchange="toggleSplitMode()">
                   <option value="single">Una sola persona</option>
+                  <option value="half">50/50 (Omi / Val)</option>
+                  <option value="7030">70/30 (Omi / Val)</option>
                   <option value="custom">Reparto personalizado</option>
                 </select>
               </div>
@@ -336,7 +453,7 @@
               <div id="singleOwnerWrap">
                 <label class="field-label field-required">Persona responsable</label>
                 <select id="singleOwner"></select>
-                <p class="field-hint">Debes elegir una persona antes de guardar.</p>
+        
               </div>
 
               <div id="customSplitWrap" class="hidden space-y-3">
@@ -347,9 +464,7 @@
                 </div>
               </div>
 
-              <div class="rounded-2xl bg-blue-50 border border-blue-100 p-4 text-sm text-slate-700 leading-relaxed">
-                Puedes editar después el concepto, la persona responsable, el inicio del MSI o migrar un cargo viejo a formato nuevo sin perder control.
-              </div>
+  
 
               <button type="submit" class="btn w-full rounded-2xl bg-slate-900 text-white py-4 text-xs font-extrabold uppercase tracking-[.18em]">Guardar cargo</button>
             </div>
@@ -370,24 +485,35 @@
     const NOW = new Date(), CURRENT_MONTH = NOW.getMonth(), CURRENT_YEAR = NOW.getFullYear();
     const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     const bankClassMap = { BANAMEX:'bg-BANAMEX', SANTANDER:'bg-SANTANDER', BBVA:'bg-BBVA', BANCOMER:'bg-BANCOMER', AMEX:'bg-AMEX', NU:'bg-NU' };
-    const legacyPersonLabels = { omar:'Omar', omi:'Omar', valeria:'Valeria', vale:'Valeria', ambos:'Compartido', extra:'Extra', mama:'Extra' };
+    const legacyPersonLabels = { omar:'Omi', omi:'Omi', valeria:'Val', vale:'Val', ambos:'Compartido', extra:'Extra', mama:'Extra' }; const fixedBasePersonNames = { omar:'Omi', omi:'Omi', valeria:'Val', vale:'Val' };
     let cards = {}, workingCards = {}, people = {}, workingPeople = {}, legacyTransactions = [], modernTransactions = [], statements = [], monthlyClosures = {}, projectionChart = null, closureSaveBusy = false;
     const fmt = (n) => '$' + Number(n || 0).toLocaleString('es-MX', { minimumFractionDigits:2, maximumFractionDigits:2 });
     const esc = (v='') => String(v).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
     const parseAmount = (v) => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
+    const roundMoney = (n) => Math.round((parseAmount(n) + Number.EPSILON) * 100) / 100;
+    const moneyEquals = (a,b,t=0.02) => Math.abs(roundMoney(a) - roundMoney(b)) <= t;
     const slugify = (name='') => name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,40) || ('persona-' + Math.random().toString(36).slice(2,8));
     const monthDiff = (y1,m1,y2,m2) => (y2 - y1) * 12 + (m2 - m1); const toMonthLabel = (y,m) => `${months[m]} ${y}`; const dateStamp = () => new Date().toISOString();
-    const getSelectedMonth = () => parseInt(document.getElementById('monthSelector').value); const getSelectedYear = () => parseInt(document.getElementById('yearSelector').value); const periodKey = (y,m) => `${y}-${String(m + 1).padStart(2,'0')}`; const isPastMonth = (y,m) => y < CURRENT_YEAR || (y === CURRENT_YEAR && m < CURRENT_MONTH);
+    const getSelectedMonth = () => parseInt((document.getElementById('monthSelectorRegistrar') || document.getElementById('monthSelector')).value); const getSelectedYear = () => parseInt((document.getElementById('yearSelectorRegistrar') || document.getElementById('yearSelector')).value); const periodKey = (y,m) => `${y}-${String(m + 1).padStart(2,'0')}`; const isPastMonth = (y,m) => y < CURRENT_YEAR || (y === CURRENT_YEAR && m < CURRENT_MONTH);
     function defaultCards(){ return { BANAMEX:{ alias:'Banamex' }, BBVA:{ alias:'BBVA' } }; }
-    function defaultPeople(){ return { omar:{ name:'Omar', locked:true }, valeria:{ name:'Valeria', locked:true } }; }
-    function getPersonLabel(id){ return workingPeople[id]?.name || people[id]?.name || legacyPersonLabels[id] || id; }
+    function defaultPeople(){ return { omar:{ name:'Omi', locked:true }, valeria:{ name:'Val', locked:true } }; }
+    function getPersonLabel(id){ return fixedBasePersonNames[id] || workingPeople[id]?.name || people[id]?.name || legacyPersonLabels[id] || id; }
     function allPersonIds(){ const ids = new Set([...Object.keys(defaultPeople()), ...Object.keys(people), ...Object.keys(workingPeople)]); legacyTransactions.forEach(tx => Object.keys(tx.splits || {}).forEach(id => ids.add(id))); modernTransactions.forEach(tx => Object.keys(tx.splits || {}).forEach(id => ids.add(id))); return Array.from(ids); }
-    function prepareSelectors(){ ['monthSelector','movementStartMonth','statementMonth','progressReferenceMonth'].forEach(id => { const sel=document.getElementById(id); sel.innerHTML=''; months.forEach((label,idx)=>sel.add(new Option(label, idx, idx===CURRENT_MONTH))); sel.value=String(CURRENT_MONTH); }); ['yearSelector','movementStartYear','statementYear','progressReferenceYear'].forEach(id => { const sel=document.getElementById(id); sel.innerHTML=''; for(let y=2024;y<=2033;y++) sel.add(new Option(String(y), y, y===CURRENT_YEAR)); sel.value=String(CURRENT_YEAR); }); document.getElementById('monthSelector').onchange=renderAll; document.getElementById('yearSelector').onchange=renderAll; ['filterCard','filterPerson','filterSearch'].forEach(id => document.getElementById(id).addEventListener('input', renderAll)); ['movementAmount','progressCurrentInstallment','progressTotalInstallments','progressReferenceMonth','progressReferenceYear'].forEach(id => document.getElementById(id).addEventListener('input', updateProgressPreview)); document.getElementById('movementConcept').addEventListener('input', autoDetectInstallmentPattern); }
-    function syncPeriodDefaults(){ ['monthSelector','movementStartMonth','statementMonth','progressReferenceMonth'].forEach(id => document.getElementById(id).value=String(CURRENT_MONTH)); ['yearSelector','movementStartYear','statementYear','progressReferenceYear'].forEach(id => document.getElementById(id).value=String(CURRENT_YEAR)); }
+    function applyPeriodToAll(month, year){ ['monthSelectorRegistrar','movementStartMonth','statementMonth','progressReferenceMonth'].forEach(id => { const el=document.getElementById(id); if(el) el.value=String(month); }); ['yearSelectorRegistrar','movementStartYear','statementYear','progressReferenceYear'].forEach(id => { const el=document.getElementById(id); if(el) el.value=String(year); }); }
+    function handlePeriodChange(source){
+      const monthId = 'monthSelectorRegistrar';
+      const yearId = 'yearSelectorRegistrar';
+      const month = parseInt(document.getElementById(monthId).value);
+      const year = parseInt(document.getElementById(yearId).value);
+      applyPeriodToAll(month, year);
+      renderAll();
+    }
+    function prepareSelectors(){ ['monthSelectorRegistrar','movementStartMonth','statementMonth','progressReferenceMonth'].forEach(id => { const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; months.forEach((label,idx)=>sel.add(new Option(label, idx, idx===CURRENT_MONTH))); sel.value=String(CURRENT_MONTH); }); ['yearSelectorRegistrar','movementStartYear','statementYear','progressReferenceYear'].forEach(id => { const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; for(let y=2024;y<=2033;y++) sel.add(new Option(String(y), y, y===CURRENT_YEAR)); sel.value=String(CURRENT_YEAR); }); const monthRegistrar=document.getElementById('monthSelectorRegistrar'); const yearRegistrar=document.getElementById('yearSelectorRegistrar'); if(monthRegistrar) monthRegistrar.onchange=() => handlePeriodChange('registrar'); if(yearRegistrar) yearRegistrar.onchange=() => handlePeriodChange('registrar'); ['filterCard','filterPerson','filterSearch'].forEach(id => document.getElementById(id).addEventListener('input', renderAll)); ['movementAmount','progressCurrentInstallment','progressTotalInstallments','progressReferenceMonth','progressReferenceYear'].forEach(id => document.getElementById(id).addEventListener('input', updateProgressPreview)); document.getElementById('movementConcept').addEventListener('input', autoDetectInstallmentPattern); }
+    function syncPeriodDefaults(){ applyPeriodToAll(CURRENT_MONTH, CURRENT_YEAR); }
     function updateCardSelects(){ const cardNames=Object.keys(workingCards); document.querySelectorAll('.dynamic-card-select').forEach(sel => { const old=sel.value; sel.innerHTML=''; cardNames.forEach(name => sel.add(new Option(name,name))); if(!cardNames.length) sel.add(new Option('SIN TARJETAS','')); if(cardNames.includes(old)) sel.value=old; }); const filter=document.getElementById('filterCard'); const current=filter.value; filter.innerHTML='<option value="all">Todas</option>' + cardNames.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join(''); if(cardNames.includes(current)) filter.value=current; }
     function updatePeopleUI(){ const ids=allPersonIds(); const singleOwner=document.getElementById('singleOwner'); const previous=singleOwner.value; singleOwner.innerHTML='<option value="">Selecciona una persona</option>' + ids.map(id => `<option value="${esc(id)}">${esc(getPersonLabel(id))}</option>`).join(''); if(previous && ids.includes(previous)) singleOwner.value=previous; else singleOwner.value=''; const filter=document.getElementById('filterPerson'); const current=filter.value; filter.innerHTML='<option value="all">Todas</option>' + ids.map(id => `<option value="${esc(id)}">${esc(getPersonLabel(id))}</option>`).join(''); if(ids.includes(current)) filter.value=current; renderSplitRows(); renderPeopleList(); }
     function renderCardsList(){ const list=document.getElementById('cardsList'); const items=Object.entries(workingCards); list.innerHTML = items.length ? items.map(([name,cfg]) => `<div class="soft rounded-[28px] p-5"><div class="flex items-start justify-between gap-3 mb-4"><div><h4 class="text-lg font-extrabold">${esc(name)}</h4><p class="text-sm text-slate-500">Alias: ${esc(cfg.alias || name)}</p></div><button onclick="removeCard('${esc(name).replace(/'/g, "\'")}')" class="btn rounded-xl border border-rose-200 bg-rose-50 text-rose-600 px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button></div><div><label class="block text-[10px] uppercase font-extrabold tracking-[.16em] text-slate-400 mb-1">Alias</label><input id="cfg_alias_${esc(name)}" value="${esc(cfg.alias || '')}" /></div></div>`).join('') : '<div class="empty">No hay tarjetas configuradas.</div>'; }
-    function renderPeopleList(){ const list=document.getElementById('peopleList'); const items=Object.entries(workingPeople); list.innerHTML = items.length ? items.map(([id,person]) => `<div class="soft rounded-[22px] p-4 flex items-center justify-between gap-3"><div><div class="font-extrabold text-slate-800">${esc(person.name)}</div><div class="text-xs text-slate-400">ID interno: ${esc(id)}</div></div>${person.locked ? '<span class="badge chip">base</span>' : `<button onclick="removePerson('${esc(id)}')" class="btn rounded-xl border border-rose-200 bg-rose-50 text-rose-600 px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button>`}</div>`).join('') : '<div class="empty">No hay personas configuradas.</div>'; }
+    function renderPeopleList(){ const list=document.getElementById('peopleList'); const items=Object.entries(workingPeople); list.innerHTML = items.length ? items.map(([id,person]) => `<div class="soft rounded-[22px] p-4 flex items-center justify-between gap-3"><div><div class="font-extrabold text-slate-800">${esc(getPersonLabel(id))}</div><div class="text-xs text-slate-400">ID interno: ${esc(id)}</div></div>${person.locked ? '<span class="badge chip">base</span>' : `<button onclick="removePerson('${esc(id)}')" class="btn rounded-xl border border-rose-200 bg-rose-50 text-rose-600 px-3 py-2 text-[11px] font-extrabold uppercase tracking-[.16em]">Eliminar</button>`}</div>`).join('') : '<div class="empty">No hay personas configuradas.</div>'; }
     function normalizeLegacyExpense(exp){ const amount=parseAmount(exp.amount); const owner=exp.owner || 'ambos'; let splits={}; if(owner==='omi' || owner==='omar') splits={ omar: amount }; else if(owner==='vale' || owner==='valeria') splits={ valeria: amount }; else if(owner==='mama' || owner==='extra') splits={ extra: amount }; else splits={ omar: amount/2, valeria: amount/2 }; return { id:exp.id, source:'legacy', concept:exp.concept || 'Sin concepto', amount, card:exp.card || 'BANAMEX', totalMonths:Math.max(1, parseInt(exp.totalMonths || 1)), startMonth:parseInt(exp.startMonth ?? CURRENT_MONTH), startYear:parseInt(exp.startYear ?? CURRENT_YEAR), notes:exp.notes || '', splits, createdAt:exp.createdAt || dateStamp() }; }
     function normalizeModernCharge(tx){ if((tx.type || 'purchase') !== 'purchase') return null; return { id:tx.id, source:'modern', concept:tx.concept || 'Sin concepto', amount:parseAmount(tx.amount), card:tx.card || 'BANAMEX', totalMonths:Math.max(1, parseInt(tx.totalMonths || 1)), startMonth:parseInt(tx.startMonth ?? CURRENT_MONTH), startYear:parseInt(tx.startYear ?? CURRENT_YEAR), notes:tx.notes || '', splits:(tx.splits && typeof tx.splits === 'object') ? tx.splits : { omar: parseAmount(tx.amount) }, createdAt:tx.createdAt || dateStamp() }; }
     function allCharges(){ return [...legacyTransactions, ...modernTransactions].filter(Boolean).sort((a,b) => (b.createdAt || '').localeCompare(a.createdAt || '')); }
@@ -399,7 +525,34 @@
     function buildClosureSnapshot(y,m){ const data=computeDashboard(y,m); const byCard={}; Object.keys(data.cardSummary || {}).forEach(card => { const item=data.cardSummary[card]; if((item.total || 0) <= 0.009 && (!item.people || !Object.keys(item.people).length)) return; byCard[card]={ total:Math.round(item.total*100)/100, aliveBalance:Math.round(item.aliveBalance*100)/100, activePurchases:item.activePurchases, byPerson:simplifyPositiveMap(item.people || {}) }; }); const byPerson=simplifyPositiveMap(data.ownerTotals || {}); const base={ year:y, month:m, periodKey:periodKey(y,m), total:Math.round(data.monthTotal*100)/100, remainingMsi:Math.round(data.remainingMsi*100)/100, activeContracts:data.activeContracts, byPerson, byCard }; return { ...base, contentHash:JSON.stringify(base), updatedAt:dateStamp(), mode:'auto' }; }
     async function saveClosureSnapshot(y,m,force=false){ if(!isPastMonth(y,m) && !force) return; if(closureSaveBusy) return; closureSaveBusy=true; try { const snapshot=buildClosureSnapshot(y,m); const key=snapshot.periodKey; const current=monthlyClosures[key]; if(!force && current?.contentHash === snapshot.contentHash) return; await set(dbRef(db, `monthlyClosures/${key}`), snapshot); } catch(err){ console.warn('No se pudo guardar cierre automático', err); } finally { closureSaveBusy=false; } }
     async function autoSavePreviousMonthClosure(){ const prev=new Date(CURRENT_YEAR, CURRENT_MONTH, 1); prev.setMonth(prev.getMonth()-1); await saveClosureSnapshot(prev.getFullYear(), prev.getMonth()); }
-    function renderKpis(data){ const omar = data.ownerTotals.omar || 0; const vale = data.ownerTotals.valeria || 0; document.getElementById('kpiArea').innerHTML=[ { title:'Deuda del periodo', value:fmt(data.monthTotal), color:'border-blue-500 bg-blue-50' }, { title:'Cuánto debe Omar', value:fmt(omar), color:'border-slate-900 bg-white' }, { title:'Cuánto debe Vale', value:fmt(vale), color:'border-rose-500 bg-rose-50' } ].map(item => `<div class="glass rounded-[26px] p-5 border-b-4 ${item.color}"><p class="kpi-title">${item.title}</p><h3 class="text-3xl font-extrabold tracking-tight mt-2">${esc(item.value)}</h3></div>`).join(''); }
+    function renderKpis(data){
+      const omi = data.ownerTotals.omar || data.ownerTotals.omi || 0;
+      const val = data.ownerTotals.valeria || data.ownerTotals.vale || 0;
+      const extraPalette = [
+        'border-emerald-500 bg-emerald-50',
+        'border-amber-500 bg-amber-50',
+        'border-violet-500 bg-violet-50',
+        'border-cyan-500 bg-cyan-50',
+        'border-fuchsia-500 bg-fuchsia-50',
+        'border-lime-500 bg-lime-50'
+      ];
+      const baseCards = [
+        { title:'Deuda del periodo', value:fmt(data.monthTotal), color:'border-blue-500 bg-blue-50' },
+        { title:'Cuánto debe Omi', value:fmt(omi), color:'border-slate-900 bg-white' },
+        { title:'Cuánto debe Val', value:fmt(val), color:'border-rose-500 bg-rose-50' }
+      ];
+      const extraCards = allPersonIds()
+        .filter(id => !['omar','omi','valeria','vale'].includes(id))
+        .filter(id => (data.ownerTotals[id] || 0) > 0.009)
+        .sort((a,b) => (data.ownerTotals[b] || 0) - (data.ownerTotals[a] || 0))
+        .map((id, idx) => ({
+          title:`Cuánto debe ${getPersonLabel(id)}`,
+          value:fmt(data.ownerTotals[id] || 0),
+          color: extraPalette[idx % extraPalette.length]
+        }));
+      const cardsToRender = [...baseCards, ...extraCards];
+      document.getElementById('kpiArea').innerHTML = cardsToRender.map(item => `<div class="glass rounded-[26px] p-5 border-b-4 ${item.color}"><p class="kpi-title">${item.title}</p><h3 class="text-3xl font-extrabold tracking-tight mt-2">${esc(item.value)}</h3></div>`).join('');
+    }
     function renderOwnerBalance(data){ const ids=allPersonIds().filter(id => !['omar','valeria','omi','vale'].includes(id) && (data.ownerTotals[id] || 0) > 0.009).sort((a,b) => (data.ownerTotals[b] || 0) - (data.ownerTotals[a] || 0)); const area=document.getElementById('ownerBalanceArea'); area.innerHTML = ids.length ? ids.map(id => `<div class="soft rounded-[22px] p-4 border border-slate-200"><div class="flex items-center justify-between gap-3"><div><div class="kpi-title">Persona extra</div><div class="text-lg font-extrabold text-slate-800">${esc(getPersonLabel(id))}</div></div><div class="text-2xl font-extrabold">${fmt(data.ownerTotals[id])}</div></div></div>`).join('') : '<div class="empty">Aún no hay personas extra con deuda en este periodo.</div>'; }
     function renderCardSummary(data){ const area=document.getElementById('cardSummaryArea'); const cardsToShow=Object.keys(workingCards).length ? Object.keys(workingCards) : Object.keys(data.cardSummary || {}); if(!cardsToShow.length){ area.innerHTML='<div class="empty col-span-full">Agrega tarjetas para comenzar.</div>'; return; } area.innerHTML=cardsToShow.map(name => { const summary=data.cardSummary[name] || { total:0, people:{}, activePurchases:0, aliveBalance:0 }; const peopleRows=Object.keys(summary.people || {}).sort((a,b) => (summary.people[b] || 0) - (summary.people[a] || 0)); const bankClass=bankClassMap[name] || 'bg-default-card'; return `<div class="glass rounded-[28px] overflow-hidden border border-white"><div class="${bankClass} text-white px-5 py-5"><div class="flex items-start justify-between gap-3"><div><p class="text-[10px] font-extrabold uppercase tracking-[.18em] text-white/60">${esc(workingCards[name]?.alias || 'Tarjeta')}</p><h3 class="text-2xl font-extrabold tracking-tight">${esc(name)}</h3><p class="text-sm text-white/75 mt-1">Total del mes ${fmt(summary.total)}</p></div><span class="badge bg-white/15 text-white">${summary.activePurchases} cargo(s)</span></div></div><div class="p-5 bg-white/92 space-y-3"><div class="flex items-center justify-between text-sm text-slate-500"><span>Saldo vivo</span><strong>${fmt(summary.aliveBalance)}</strong></div><div class="space-y-2">${peopleRows.length ? peopleRows.map(id => `<div class="flex items-center justify-between text-sm border-b border-slate-100 pb-2"><span>${esc(getPersonLabel(id))}</span><strong>${fmt(summary.people[id])}</strong></div>`).join('') : '<div class="text-sm text-slate-400 italic">Sin deuda asignada este mes.</div>'}</div></div></div>`; }).join(''); }
     function filterChargesForMonth(charges,y,m){ const cardFilter=document.getElementById('filterCard').value, personFilter=document.getElementById('filterPerson').value, q=document.getElementById('filterSearch').value.trim().toLowerCase(); return charges.filter(tx => { const impact=chargeImpactForMonth(tx,y,m); if(!impact.active) return false; if(cardFilter !== 'all' && tx.card !== cardFilter) return false; if(personFilter !== 'all'){ const split=splitImpactForMonth(tx,y,m); if(!(split[personFilter] > 0)) return false; } if(q){ const hay=`${tx.concept} ${tx.notes || ''} ${tx.card}`.toLowerCase(); if(!hay.includes(q)) return false; } return true; }); }
@@ -436,14 +589,14 @@
     }
 } function toggleScheduleMode(){ const progress=document.getElementById('scheduleMode').value === 'progress'; document.getElementById('scheduleStartWrap').classList.toggle('hidden', progress); document.getElementById('scheduleProgressWrap').classList.toggle('hidden', !progress); updateProgressPreview(); }
     window.toggleScheduleMode = toggleScheduleMode;
-    function toggleSplitMode(){ const custom=document.getElementById('splitMode').value === 'custom'; document.getElementById('singleOwnerWrap').classList.toggle('hidden', custom); document.getElementById('customSplitWrap').classList.toggle('hidden', !custom); updateCustomSplitView(); }
+    function toggleSplitMode(){ const mode=document.getElementById('splitMode').value; const custom=mode === 'custom'; const single=mode === 'single'; document.getElementById('singleOwnerWrap').classList.toggle('hidden', !single); document.getElementById('customSplitWrap').classList.toggle('hidden', !custom); updateCustomSplitView(); }
     window.toggleSplitMode = toggleSplitMode;
-    function getMovementSplits(amount){ if(document.getElementById('splitMode').value === 'single'){ const id=document.getElementById('singleOwner').value; if(!id) throw new Error('Selecciona obligatoriamente una persona responsable.'); return { [id]: amount }; } const splits={}, sumObj={sum:0}; document.querySelectorAll('[data-split-id]').forEach(input => { const val=parseAmount(input.value); if(val>0){ splits[input.dataset.splitId]=val; sumObj.sum += val; } }); if(!Object.keys(splits).length) throw new Error('Captura al menos una persona en el reparto.'); if(Math.abs(sumObj.sum - amount) > 0.02) throw new Error('El reparto personalizado no suma exactamente el monto total.'); return splits; }
+    function getMovementSplits(amount){ const mode=document.getElementById('splitMode').value; if(mode === 'single'){ const id=document.getElementById('singleOwner').value; if(!id) throw new Error('Selecciona obligatoriamente una persona responsable.'); return { [id]: roundMoney(amount) }; } if(mode === 'half'){ const vale=roundMoney(amount / 2); const omar=roundMoney(amount - vale); return { valeria: vale, omar: omar }; } if(mode === '7030'){ const vale=roundMoney(amount * 0.30); const omar=roundMoney(amount - vale); return { valeria: vale, omar: omar }; } const splits={}, sumObj={sum:0}; document.querySelectorAll('[data-split-id]').forEach(input => { const val=parseAmount(input.value); if(val>0){ splits[input.dataset.splitId]=val; sumObj.sum += val; } }); if(!Object.keys(splits).length) throw new Error('Captura al menos una persona en el reparto.'); if(Math.abs(sumObj.sum - amount) > 0.02) throw new Error('El reparto personalizado no suma exactamente el monto total.'); return splits; }
     function getSchedulePayload(){ const mode=document.getElementById('scheduleMode').value; if(mode === 'progress'){ const current=parseInt(document.getElementById('progressCurrentInstallment').value || '0'); const total=parseInt(document.getElementById('progressTotalInstallments').value || '0'); const refMonth=parseInt(document.getElementById('progressReferenceMonth').value); const refYear=parseInt(document.getElementById('progressReferenceYear').value); if(!current || !total || current<1 || total<1 || current>total) throw new Error('Captura correctamente el avance del MSI, por ejemplo 4 de 12.'); const start=inferStartFromProgress(refYear, refMonth, current); return { totalMonths: total, startMonth:start.month, startYear:start.year, captureMode:'progress', currentInstallment: current, referenceMonth: refMonth, referenceYear: refYear }; } return { totalMonths: Math.max(1, parseInt(document.getElementById('movementMonths').value || '1')), startMonth: parseInt(document.getElementById('movementStartMonth').value), startYear: parseInt(document.getElementById('movementStartYear').value), captureMode:'start' }; }
     function resetChargeForm(){ document.getElementById('movementForm').reset(); document.getElementById('movementModalTitle').innerText='Nuevo cargo'; document.getElementById('editChargeId').value=''; document.getElementById('editChargeSource').value=''; document.getElementById('scheduleMode').value='start'; ['movementStartMonth','progressReferenceMonth'].forEach(id => document.getElementById(id).value=String(getSelectedMonth())); ['movementStartYear','progressReferenceYear'].forEach(id => document.getElementById(id).value=String(getSelectedYear())); document.getElementById('movementMonths').value='1'; document.getElementById('splitMode').value='single'; toggleScheduleMode(); toggleSplitMode(); document.getElementById('singleOwner').value=''; }
     function openChargeModal(){ resetChargeForm(); openModal('modalMovement'); }
     window.openChargeModal = openChargeModal;
-    function setSingleOrCustomSplits(splits,totalAmount){ const ids=Object.keys(splits || {}).filter(id => parseAmount(splits[id]) > 0.009); if(ids.length===1 && Math.abs(parseAmount(splits[ids[0]]) - totalAmount) <= 0.02){ document.getElementById('splitMode').value='single'; toggleSplitMode(); document.getElementById('singleOwner').value=ids[0]; } else { document.getElementById('splitMode').value='custom'; toggleSplitMode(); document.querySelectorAll('[data-split-id]').forEach(input => { input.value = splits[input.dataset.splitId] ? String(splits[input.dataset.splitId]) : ''; }); updateCustomSplitView(); } }
+    function setSingleOrCustomSplits(splits,totalAmount){ const ids=Object.keys(splits || {}).filter(id => parseAmount(splits[id]) > 0.009); const vale=parseAmount(splits?.valeria); const omar=parseAmount(splits?.omar); if(ids.length===2 && ids.includes('valeria') && ids.includes('omar') && moneyEquals(vale, totalAmount / 2) && moneyEquals(omar, totalAmount / 2)){ document.getElementById('splitMode').value='half'; toggleSplitMode(); return; } if(ids.length===2 && ids.includes('valeria') && ids.includes('omar') && moneyEquals(vale, totalAmount * 0.30) && moneyEquals(omar, totalAmount * 0.70)){ document.getElementById('splitMode').value='7030'; toggleSplitMode(); return; } if(ids.length===1 && Math.abs(parseAmount(splits[ids[0]]) - totalAmount) <= 0.02){ document.getElementById('splitMode').value='single'; toggleSplitMode(); document.getElementById('singleOwner').value=ids[0]; } else { document.getElementById('splitMode').value='custom'; toggleSplitMode(); document.querySelectorAll('[data-split-id]').forEach(input => { input.value = splits[input.dataset.splitId] ? String(splits[input.dataset.splitId]) : ''; }); updateCustomSplitView(); } }
     function populateFormFromCharge(tx){ document.getElementById('movementConcept').value=tx.concept || ''; document.getElementById('movementAmount').value=tx.amount; document.getElementById('movementCard').value=tx.card; document.getElementById('movementNotes').value=tx.notes || ''; const currentPeriodMonth=getSelectedMonth(), currentPeriodYear=getSelectedYear(); const diff=monthDiff(tx.startYear, tx.startMonth, currentPeriodYear, currentPeriodMonth); if(tx.totalMonths > 1 && diff >= 0 && diff < tx.totalMonths){ document.getElementById('scheduleMode').value='progress'; toggleScheduleMode(); document.getElementById('progressCurrentInstallment').value=String(diff+1); document.getElementById('progressTotalInstallments').value=String(tx.totalMonths); document.getElementById('progressReferenceMonth').value=String(currentPeriodMonth); document.getElementById('progressReferenceYear').value=String(currentPeriodYear); updateProgressPreview(); } else { document.getElementById('scheduleMode').value='start'; toggleScheduleMode(); document.getElementById('movementMonths').value=String(tx.totalMonths || 1); document.getElementById('movementStartMonth').value=String(tx.startMonth); document.getElementById('movementStartYear').value=String(tx.startYear); } setSingleOrCustomSplits(tx.splits || {}, tx.amount); }
     function editCharge(id,source){ const tx=source === 'legacy' ? legacyTransactions.find(x => x.id===id) : modernTransactions.find(x => x.id===id); if(!tx) return; resetChargeForm(); document.getElementById('movementModalTitle').innerText='Editar cargo'; document.getElementById('editChargeId').value=id; document.getElementById('editChargeSource').value=source; populateFormFromCharge(tx); openModal('modalMovement'); }
     window.editCharge = editCharge;
@@ -457,7 +610,7 @@
     window.addPerson = addPerson;
     function removePerson(id){ if(workingPeople[id]?.locked) return; Swal.fire({ title:`¿Eliminar ${getPersonLabel(id)}?`, text:'Solo se quitará del catálogo. Los cargos históricos seguirán mostrando el nombre si ya existía.', icon:'warning', showCancelButton:true }).then(r => { if(!r.isConfirmed) return; delete workingPeople[id]; updatePeopleUI(); }); }
     window.removePerson = removePerson;
-    async function savePeople(){ await set(dbRef(db, 'settings/people'), workingPeople); closeModal('modalPeople'); Swal.fire({ icon:'success', title:'Personas actualizadas', timer:1200, showConfirmButton:false }); }
+    async function savePeople(){ const basePeople=defaultPeople(); ['omar','valeria'].forEach(id => { workingPeople[id] = { ...(workingPeople[id] || {}), ...basePeople[id], locked:true }; }); await set(dbRef(db, 'settings/people'), workingPeople); closeModal('modalPeople'); Swal.fire({ icon:'success', title:'Personas actualizadas', timer:1200, showConfirmButton:false }); }
     window.savePeople = savePeople;
     function openModal(id){ document.getElementById(id).style.display='flex'; }
     function closeModal(id){ document.getElementById(id).style.display='none'; }
@@ -473,10 +626,10 @@
     function setTab(tab){ document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active','text-white')); document.getElementById(`tab-${tab}`).classList.add('tab-active','text-white'); document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden')); document.getElementById(`page-${tab}`).classList.remove('hidden'); }
     window.setTab = setTab;
     async function handleAutomaticClosures(){ const y=getSelectedYear(), m=getSelectedMonth(); await autoSavePreviousMonthClosure(); if(isPastMonth(y,m)) await saveClosureSnapshot(y,m); }
-    function renderAll(){ const y=getSelectedYear(), m=getSelectedMonth(); document.getElementById('movementStartMonth').value=String(m); document.getElementById('movementStartYear').value=String(y); document.getElementById('statementMonth').value=String(m); document.getElementById('statementYear').value=String(y); document.getElementById('progressReferenceMonth').value=String(m); document.getElementById('progressReferenceYear').value=String(y); const data=computeDashboard(y,m); renderKpis(data); renderOwnerBalance(data); renderCardSummary(data); renderMovementsTable(); renderStatesTable(); renderProjection(); renderClosureSection(); handleAutomaticClosures(); }
+    function renderAll(){ const y=getSelectedYear(), m=getSelectedMonth(); applyPeriodToAll(m, y); const data=computeDashboard(y,m); renderKpis(data); renderOwnerBalance(data); renderCardSummary(data); renderMovementsTable(); renderStatesTable(); renderProjection(); renderClosureSection(); handleAutomaticClosures(); }
     window.renderAll=renderAll;
-    function wireRealtime(){ onValue(dbRef(db, 'settings/cards'), snap => { cards=snap.val() || defaultCards(); workingCards=JSON.parse(JSON.stringify(cards)); updateCardSelects(); renderCardsList(); renderAll(); }); onValue(dbRef(db, 'settings/people'), snap => { people={ ...defaultPeople(), ...(snap.val() || {}) }; workingPeople=JSON.parse(JSON.stringify(people)); updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'transactions'), snap => { const data=snap.val(); modernTransactions=data ? Object.keys(data).map(id => normalizeModernCharge({ id, ...data[id] })).filter(Boolean) : []; updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'expenses'), snap => { const data=snap.val(); legacyTransactions=data ? Object.keys(data).map(id => normalizeLegacyExpense({ id, ...data[id] })) : []; updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'statements'), snap => { const data=snap.val(); statements=data ? Object.keys(data).map(id => ({ id, ...data[id] })) : []; renderAll(); }); onValue(dbRef(db, 'monthlyClosures'), snap => { monthlyClosures=snap.val() || {}; renderClosureSection(); }); }
-    function init(){ prepareSelectors(); syncPeriodDefaults(); workingCards=defaultCards(); workingPeople=defaultPeople(); updateCardSelects(); renderCardsList(); updatePeopleUI(); toggleScheduleMode(); toggleSplitMode(); wireRealtime(); setTab('dashboard'); renderAll(); }
+    function wireRealtime(){ onValue(dbRef(db, 'settings/cards'), snap => { cards=snap.val() || defaultCards(); workingCards=JSON.parse(JSON.stringify(cards)); updateCardSelects(); renderCardsList(); renderAll(); }); onValue(dbRef(db, 'settings/people'), snap => { people={ ...defaultPeople(), ...(snap.val() || {}) }; const basePeople=defaultPeople(); ['omar','valeria'].forEach(id => { people[id] = { ...(people[id] || {}), ...basePeople[id], locked:true }; }); workingPeople=JSON.parse(JSON.stringify(people)); updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'transactions'), snap => { const data=snap.val(); modernTransactions=data ? Object.keys(data).map(id => normalizeModernCharge({ id, ...data[id] })).filter(Boolean) : []; updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'expenses'), snap => { const data=snap.val(); legacyTransactions=data ? Object.keys(data).map(id => normalizeLegacyExpense({ id, ...data[id] })) : []; updatePeopleUI(); renderAll(); }); onValue(dbRef(db, 'statements'), snap => { const data=snap.val(); statements=data ? Object.keys(data).map(id => ({ id, ...data[id] })) : []; renderAll(); }); onValue(dbRef(db, 'monthlyClosures'), snap => { monthlyClosures=snap.val() || {}; renderClosureSection(); }); }
+    function init(){ prepareSelectors(); syncPeriodDefaults(); workingCards=defaultCards(); workingPeople=defaultPeople(); updateCardSelects(); renderCardsList(); updatePeopleUI(); toggleScheduleMode(); toggleSplitMode(); wireRealtime(); setTab('registrar'); renderAll(); }
     init();
   </script>
 </body>
